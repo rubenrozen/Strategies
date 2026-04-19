@@ -44,7 +44,7 @@ def fetch_tab(gc: gspread.Client, sheet_id: str, gid: str) -> list[list[str]]:
     try:
         sh = gc.open_by_key(sheet_id)
         ws = sh.get_worksheet_by_id(int(gid))
-        rows = ws.get_all_values()
+        rows = ws.get_all_values(value_render_option='UNFORMATTED_VALUE')
         return rows
     except gspread.exceptions.SpreadsheetNotFound:
         print(f"  ERROR: Sheet {sheet_id} not found or not shared with service account.")
@@ -403,7 +403,8 @@ def main():
         try:
             sh = gc.open_by_key(sid)
             ws_year = sh.worksheet(year_name)
-            year_rows = ws_year.get_all_values()
+            # Use explicit range to ensure far-right columns (MJ-ML = 347-349) are included
+            year_rows = ws_year.get_all_values(value_render_option='UNFORMATTED_VALUE')
             raw_mwrr      = year_rows[15][4].strip()   if len(year_rows) > 15  and 4   < len(year_rows[15])  else ""  # E16
             raw_ytd_pct   = year_rows[16][4].strip()   if len(year_rows) > 16  and 4   < len(year_rows[16])  else ""  # E17
             raw_ytd_strat  = year_rows[10][353].strip() if len(year_rows) > 10 and 353 < len(year_rows[10]) else ""  # MP11
