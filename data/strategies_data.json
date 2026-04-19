@@ -1,1 +1,179 @@
-{}
+{
+  "lastUpdated": "2026-04-19T02:15:32Z",
+  "strategies": [
+    {
+      "fetchError": true,
+      "ytd": {
+        "dates": [],
+        "portfolio": [],
+        "benchmark": []
+      },
+      "metrics": {},
+      "composition": {
+        "equities": [],
+        "bonds": [],
+        "crypto": [],
+        "futures": []
+      },
+      "currencies": [],
+      "sectors": [],
+      "mwrrYtd": 19.17,
+      "assetClasses": [
+        {
+          "name": "Cash",
+          "value": 12640.65,
+          "pct": 17.64
+        },
+        {
+          "name": "Equity",
+          "value": 46305.76,
+          "pct": 64.63
+        },
+        {
+          "name": "Bonds",
+          "value": 12698.74,
+          "pct": 17.72
+        },
+        {
+          "name": "Futures",
+          "value": 0.0,
+          "pct": 0.0
+        },
+        {
+          "name": "Crypto",
+          "value": 0.0,
+          "pct": 0.0
+        }
+      ],
+      "id": "valueunderflow",
+      "displayName": "Value Underflow",
+      "color": "#4e94f7",
+      "tag": "Agressif · Haute Conviction · Long Terme",
+      "benchmarkName": "S&P 500 Growth"
+    },
+    {
+      "fetchError": true,
+      "ytd": {
+        "dates": [],
+        "portfolio": [],
+        "benchmark": []
+      },
+      "metrics": {},
+      "composition": {
+        "equities": [],
+        "bonds": [],
+        "crypto": [],
+        "futures": []
+      },
+      "currencies": [],
+      "sectors": [],
+      "mwrrYtd": 133.53,
+      "assetClasses": [
+        {
+          "name": "Cash",
+          "value": 25723.67,
+          "pct": 30.21
+        },
+        {
+          "name": "Equity",
+          "value": 59412.85,
+          "pct": 69.79
+        },
+        {
+          "name": "Bonds",
+          "value": 0.0,
+          "pct": 0.0
+        },
+        {
+          "name": "Futures",
+          "value": 0.0,
+          "pct": 0.0
+        },
+        {
+          "name": "Crypto",
+          "value": 0.0,
+          "pct": 0.0
+        }
+      ],
+      "id": "trendspotting",
+      "displayName": "Trend Spotting",
+      "color": "#e8a020",
+      "tag": "Momentum · Systématique · Multi-Asset",
+      "benchmarkName": "MSCI World"
+    },
+    {
+      "fetchError": true,
+      "ytd": {
+        "dates": [],
+        "portfolio": [],
+        "benchmark": []
+      },
+      "metrics": {},
+      "composition": {
+        "equities": [],
+        "bonds": [],
+        "crypto": [],
+        "futures": []
+      },
+      "currencies": [],
+      "sectors": [],
+      "mwrrYtd": 21.0,
+      "assetClasses": [
+        {
+          "name": "Cash",
+          "value": 7643.95,
+          "pct": 9.8
+        },
+        {
+          "name": "Equity",
+          "value": 70341.98,
+          "pct": 90.2
+        },
+        {
+          "name": "Bonds",
+          "value": 0.0,
+          "pct": 0.0
+        },
+        {
+          "name": "Futures",
+          "value": 0.0,
+          "pct": 0.0
+        },
+        {
+          "name": "Crypto",
+          "value": 0.0,
+          "pct": 0.0
+        }
+      ],
+      "id": "nexthorizon",
+      "displayName": "Next Horizon",
+      "color": "#1fcfa8",
+      "tag": "Capital Preservation · Faible Volatilité",
+      "benchmarkName": "Portfolio 60/40"
+    }
+  ],
+  "correlationMatrix": {
+    "order": [
+      "nexthorizon",
+      "valueunderflow",
+      "trendspotting"
+    ],
+    "values": [
+      [
+        1.0,
+        0.2565,
+        0.3128
+      ],
+      [
+        0.2565,
+        1.0,
+        0.4755
+      ],
+      [
+        0.3128,
+        0.4755,
+        1.0
+      ]
+    ]
+  }
+}
