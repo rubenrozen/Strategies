@@ -115,7 +115,8 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
 
     # ── Portfolio library ──────────────────────────────────────────────────
     if lib_rows:
-        result["title"]       = safe_get(lib_rows, 7, "T")
+        result["title"]           = safe_get(lib_rows, 7, "T")
+        result["benchmarkName"]   = safe_get(lib_rows, 1, "H")   # H1
         result["description"] = safe_get(lib_rows, 8, "T")
 
         dates, portfolio, benchmark = [], [], []
@@ -158,11 +159,13 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
         }
         result["composition"] = extract_composition(prt_rows)
         result["currencies"]  = extract_currencies(prt_rows)
+        result["sectors"]     = compute_sectors(prt_rows)
     else:
         result["fetchError"]    = True
         result["metrics"]       = {}
         result["composition"]   = {"equities": [], "bonds": [], "crypto": [], "futures": []}
         result["currencies"]    = []
+        result["sectors"]       = []
 
     return result
 
@@ -213,6 +216,80 @@ def extract_currencies(prt_rows: list) -> list:
         })
     return result
 
+
+
+# ─── Sector allocation ────────────────────────────────────────────────────────
+
+def compute_sectors(prt_rows: list) -> list:
+    """Build sector allocation from all 4 asset classes.
+    Uses € values (or quantity for bonds) to compute percentage weights.
+    Returns list of {sector, value, pct} sorted by value desc, omitting zeros.
+    """
+    from collections import defaultdict
+    buckets = defaultdict(float)
+    START = 5  # row 6, 0-based
+
+    for row_0 in range(START, len(prt_rows)):
+        row = prt_rows[row_0]
+        def gc(idx): return row[idx].strip() if idx < len(row) else ""
+
+        # Equities — group by sector (Q=16), value T=19
+        eq_sector = gc(16)
+        eq_val    = parse_float(gc(19))
+        if eq_sector and eq_val is not None:
+            buckets[eq_sector] += abs(eq_val)
+
+        # Bonds — group by underlying (AO=40), value BA=52
+        bd_under = gc(40)
+        bd_val   = parse_float(gc(52))
+        if bd_under and bd_val is not None:
+            buckets[bd_under] += abs(bd_val)
+
+        # Futures — group by underlying (AB=27), value AG=32
+        ft_under = gc(27)
+        ft_val   = parse_float(gc(32))
+        if ft_under and ft_val is not None:
+            buckets[ft_under] += abs(ft_val)
+
+        # Crypto — all grouped as "Crypto", value X=23
+        cr_name = gc(21)
+        cr_val  = parse_float(gc(23))
+        if cr_name and cr_val is not None:
+            buckets["Crypto"] += abs(cr_val)
+
+    total = sum(buckets.values())
+    if total == 0:
+        return []
+
+    sectors = [
+        {"sector": k, "value": round(v, 2), "pct": round(v / total * 100, 2)}
+        for k, v in sorted(buckets.items(), key=lambda x: x[1], reverse=True)
+        if v > 0
+    ]
+    return sectors
+
+
+# ─── Asset class breakdown (Charts sheet) ────────────────────────────────────
+
+def extract_asset_classes(charts_rows: list) -> list:
+    """Read asset class names (U=20) and values (V=21) from Charts sheet, rows 4+.
+    Skips empty rows. Returns list of {name, value, pct}.
+    """
+    START = 3  # row 4, 0-based
+    items = []
+    for row_0 in range(START, len(charts_rows)):
+        row = charts_rows[row_0]
+        name = row[20].strip() if 20 < len(row) else ""
+        val  = parse_float(row[21].strip() if 21 < len(row) else "")
+        if name and val is not None:
+            items.append({"name": name, "value": round(abs(val), 2)})
+
+    total = sum(x["value"] for x in items)
+    if total == 0:
+        return items
+    for x in items:
+        x["pct"] = round(x["value"] / total * 100, 2)
+    return items
 
 # ─── Correlation matrix ────────────────────────────────────────────────────────
 
@@ -296,7 +373,31 @@ def main():
         print(f"  Fetching 'Portfolio' tab (gid={prt_gid})…")
         prt_rows = fetch_tab(gc, sid, prt_gid)
 
+        # Year tab — dynamic name (e.g. "2026")
+        year_name = str(datetime.now(timezone.utc).year)
+        mwrr_ytd = None
+        try:
+            sh = gc.open_by_key(sid)
+            ws_year = sh.worksheet(year_name)
+            year_rows = ws_year.get_all_values()
+            raw_mwrr = year_rows[15][4].strip() if len(year_rows) > 15 and len(year_rows[15]) > 4 else ""  # E16
+            mwrr_ytd = parse_float(raw_mwrr)
+            print(f"  Fetching year tab '{year_name}' → MWRR/CAGR YTD = {mwrr_ytd}")
+        except Exception as e:
+            print(f"  ⚠  Year tab '{year_name}' not found or error: {e}")
+
+        # Charts tab
+        charts_rows = []
+        charts_gid = strat_cfg["tabs"].get("charts_gid", "")
+        if charts_gid and "REPLACE" not in charts_gid:
+            print(f"  Fetching 'Charts' tab (gid={charts_gid})…")
+            charts_rows = fetch_tab(gc, sid, charts_gid)
+        else:
+            print(f"  ⚠  charts_gid not configured — skipping asset class breakdown")
+
         data = extract_strategy_data(lib_rows, prt_rows)
+        data["mwrrYtd"]      = mwrr_ytd
+        data["assetClasses"] = extract_asset_classes(charts_rows) if charts_rows else []
         data["id"]            = strat_cfg["id"]
         data["displayName"]   = strat_cfg["display_name"]
         data["color"]         = strat_cfg["color"]
