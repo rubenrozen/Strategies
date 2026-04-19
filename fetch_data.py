@@ -44,7 +44,7 @@ def fetch_tab(gc: gspread.Client, sheet_id: str, gid: str) -> list[list[str]]:
     try:
         sh = gc.open_by_key(sheet_id)
         ws = sh.get_worksheet_by_id(int(gid))
-        rows = ws.get_all_values(value_render_option='UNFORMATTED_VALUE')
+        rows = ws.get_all_values()
         return rows
     except gspread.exceptions.SpreadsheetNotFound:
         print(f"  ERROR: Sheet {sheet_id} not found or not shared with service account.")
@@ -73,7 +73,7 @@ def safe_get(rows: list, row_1based: int, col_letter: str) -> str:
     if r >= len(rows): return ""
     row = rows[r]
     if c >= len(row): return ""
-    return row[c].strip()
+    return str(row[c]).strip()
 
 
 def parse_float(s: str) -> float | None:
@@ -159,7 +159,7 @@ def extract_composition(prt_rows: list) -> dict:
     equities, bonds, crypto, futures = [], [], [], []
     for row_0 in range(START, len(prt_rows)):
         row = prt_rows[row_0]
-        def gc(idx): return row[idx].strip() if idx < len(row) else ""
+        def gc(idx): return str(row[idx]).strip() if idx < len(row) else ""
 
         eq_name = gc(15)
         if eq_name:
@@ -190,8 +190,8 @@ def extract_currencies(prt_rows: list) -> list:
         r = row_1based - 1
         if r >= len(prt_rows): continue
         row = prt_rows[r]
-        balance  = parse_float(row[8].strip() if 8 < len(row) else "")
-        exposure = parse_float(row[9].strip() if 9 < len(row) else "")
+        balance  = parse_float(str(row[8]).strip() if 8 < len(row) else "")
+        exposure = parse_float(str(row[9]).strip() if 9 < len(row) else "")
         if not balance and not exposure: continue
         result.append({
             "code":     code,
@@ -218,9 +218,9 @@ def extract_ytd_from_year(year_rows: list) -> dict:
 
     for row_0 in range(START, len(year_rows)):
         row = year_rows[row_0]
-        raw_date = row[COL_DATE].strip() if COL_DATE < len(row) else ""
-        raw_port = row[COL_PORT].strip() if COL_PORT < len(row) else ""
-        raw_benc = row[COL_BENC].strip() if COL_BENC < len(row) else ""
+        raw_date = str(row[COL_DATE]).strip() if COL_DATE < len(row) else ""
+        raw_port = str(row[COL_PORT]).strip() if COL_PORT < len(row) else ""
+        raw_benc = str(row[COL_BENC]).strip() if COL_BENC < len(row) else ""
 
         if not raw_date or not raw_port: continue
         iso_date = parse_date(raw_date)
@@ -249,7 +249,7 @@ def compute_sectors(prt_rows: list) -> list:
 
     for row_0 in range(START, len(prt_rows)):
         row = prt_rows[row_0]
-        def gc(idx): return row[idx].strip() if idx < len(row) else ""
+        def gc(idx): return str(row[idx]).strip() if idx < len(row) else ""
 
         # Equities — group by sector (Q=16), value T=19
         eq_sector = gc(16)
@@ -297,8 +297,8 @@ def extract_asset_classes(charts_rows: list) -> list:
     items = []
     for row_0 in range(START, len(charts_rows)):
         row = charts_rows[row_0]
-        name = row[20].strip() if 20 < len(row) else ""
-        val  = parse_float(row[21].strip() if 21 < len(row) else "")
+        name = str(row[20]).strip() if 20 < len(row) else ""
+        val  = parse_float(str(row[21]).strip() if 21 < len(row) else "")
         if name and val is not None:
             items.append({"name": name, "value": round(abs(val), 2)})
 
@@ -404,7 +404,7 @@ def main():
             sh = gc.open_by_key(sid)
             ws_year = sh.worksheet(year_name)
             # Use explicit range to ensure far-right columns (MJ-ML = 347-349) are included
-            year_rows = ws_year.get_all_values(value_render_option='UNFORMATTED_VALUE')
+            year_rows = ws_year.get_all_values()
             raw_mwrr      = year_rows[15][4].strip()   if len(year_rows) > 15  and 4   < len(year_rows[15])  else ""  # E16
             raw_ytd_pct   = year_rows[16][4].strip()   if len(year_rows) > 16  and 4   < len(year_rows[16])  else ""  # E17
             raw_ytd_strat  = year_rows[10][353].strip() if len(year_rows) > 10 and 353 < len(year_rows[10]) else ""  # MP11
