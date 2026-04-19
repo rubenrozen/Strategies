@@ -562,7 +562,7 @@ function renderStratTab(id){
         </div>
         <div class="mc" style="flex:1;margin:0">
           <div class="mc-lbl">Alpha vs ${s.benchmarkName}</div>
-          <div class="mc-val ${pCls(s.mwrrYtd!=null&&ytdBPerf!=null?s.mwrrYtd-ytdBPerf:null)}" style="font-size:28px">${s.mwrrYtd!=null&&ytdBPerf!=null?f1(s.mwrrYtd-ytdBPerf):"—"}</div>
+          <div class="mc-val ${pCls(s.mwrrYtd!=null&&bPct!=null?s.mwrrYtd-bPct:null)}" style="font-size:28px">${s.mwrrYtd!=null&&bPct!=null?f1(s.mwrrYtd-bPct):"—"}</div>
           <div class="mc-sub">MWRR YTD vs performance benchmark</div>
         </div>
       </div>
