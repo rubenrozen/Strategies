@@ -357,6 +357,7 @@ function getS(id){
     sectors:       live.sectors     || null,   // null = show mock donut
     assetClasses:  live.assetClasses|| null,
     mwrrYtd:       live.mwrrYtd     ?? null,
+    ytdPct:        live.ytdPct      ?? null,   // E17 year sheet
     benchmarkName: live.benchmarkName || base.benchmarkName,
     holdings:      MOCK_HOLD[id]||[],
   };
@@ -520,7 +521,9 @@ function renderStratTab(id){
   const port=ytd?ytd.portfolio:MOCK_YTD[id].portfolio;
   const benc=ytd?ytd.benchmark:MOCK_YTD[id].benchmark;
   const isReal=!!(ytd&&ytd.isReal);
-  const ytdPct=port.length>1?((port.at(-1)/port[0]-1)*100):null;
+  // YTD % — prefer direct value from E17, fallback to computed from series
+  const ytdPctSeries = port.length>1 ? ((port.at(-1)/port[0]-1)*100) : null;
+  const ytdPct = s.ytdPct ?? ytdPctSeries;
   const bPct=(benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
 
   document.getElementById("tab-"+id).innerHTML=`
@@ -614,8 +617,12 @@ function renderStratTab(id){
   // Sector donut — live or mock
   {
     const liveSec  = s.sectors && s.sectors.length;
-    const secLabels = liveSec ? s.sectors.map(x=>x.sector)  : MOCK_SEC[id].map(x=>x.n);
-    const secVals   = liveSec ? s.sectors.map(x=>x.pct)     : MOCK_SEC[id].map(x=>x.v);
+    const rawSecLabels = liveSec ? s.sectors.map(x=>x.sector) : MOCK_SEC[id].map(x=>x.n);
+    const rawSecVals   = liveSec ? s.sectors.map(x=>x.pct)    : MOCK_SEC[id].map(x=>x.v);
+    // Filter out zero/null entries
+    const secFiltered  = rawSecLabels.map((l,i)=>({l,v:rawSecVals[i]})).filter(x=>x.v&&x.v>0);
+    const secLabels    = secFiltered.map(x=>x.l);
+    const secVals      = secFiltered.map(x=>x.v);
     mkChart("sec-"+id,{type:"doughnut",data:{labels:secLabels,datasets:[{data:secVals,backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
     // Build legend
     const secLegEl = document.getElementById("sec-legend-"+id);
@@ -625,8 +632,9 @@ function renderStratTab(id){
   }
   // Asset class donut
   if(s.assetClasses && s.assetClasses.length){
-    const acLabels = s.assetClasses.map(x=>x.name);
-    const acVals   = s.assetClasses.map(x=>x.pct||0);
+    const acFiltered = s.assetClasses.filter(x=>x.pct&&x.pct>0);
+    const acLabels   = acFiltered.map(x=>x.name);
+    const acVals     = acFiltered.map(x=>x.pct);
     mkChart("ac-"+id,{type:"doughnut",data:{labels:acLabels,datasets:[{data:acVals,backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
     const acLegEl = document.getElementById("ac-legend-"+id);
     if(acLegEl) acLegEl.innerHTML = acLabels.map((lbl,i)=>
@@ -641,9 +649,9 @@ function renderOverview(){
   const all=FALLBACK.map(b=>getS(b.id));
   const el=document.getElementById("tab-overview");
   const metrics=[
-    {lbl:"YTD",    vals:all.map(s=>s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):s.m.ttm),fmt:f1, inv:false},
+    {lbl:"YTD",    vals:all.map(s=>s.ytdPct??s.m.ttm), fmt:f1, inv:false},
     {lbl:"TTM",    vals:all.map(s=>s.m.ttm),      fmt:f1, inv:false},
-    {lbl:"CAGR",   vals:all.map(s=>s.cagr),        fmt:f1, inv:false},
+    // CAGR removed (no longer connected)
     {lbl:"Sharpe", vals:all.map(s=>s.m.sharpe),    fmt:fd, inv:false},
     {lbl:"Sortino",vals:all.map(s=>s.m.sortino),   fmt:fd, inv:false},
     {lbl:"Volatil.",vals:all.map(s=>s.m.volatility),fmt:v=>v!=null?v.toFixed(1)+"%":"—",inv:true},
@@ -684,7 +692,7 @@ function renderOverview(){
   <div class="box">
     <div class="box-hd"><span class="box-label">Performance Signals · YTD</span></div>
     <div class="box-body">${all.map(s=>{
-      const p=s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):(s.m.ttm??0);
+      const p = s.ytdPct ?? (s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):(s.m.ttm??0));
       const b=s.ytdSeries&&s.ytdSeries.benchmark.at(-1)!=null?((s.ytdSeries.benchmark.at(-1)/100-1)*100):null;
       const mx=Math.max(...all.map(x=>x.ytdSeries?((x.ytdSeries.portfolio.at(-1)/x.ytdSeries.portfolio[0]-1)*100):(x.m.ttm??0)))*1.25;
       return`<div class="signal-ticker"><span style="font-family:var(--display);font-size:13px;font-weight:700;color:${s.color};width:120px;flex-shrink:0">${s.displayName}</span><div style="flex:1;position:relative;height:28px"><div style="position:absolute;top:2px;left:0;right:0;height:10px;background:var(--dim);border-radius:2px;overflow:hidden"><div style="height:100%;width:${(Math.max(0,p)/mx*100).toFixed(1)}%;background:${s.color};border-radius:2px;opacity:.65"></div></div><div style="position:absolute;bottom:2px;left:0;right:0;height:10px;background:var(--dim);border-radius:2px;overflow:hidden">${b!=null?`<div style="height:100%;width:${(Math.max(0,b)/mx*100).toFixed(1)}%;background:${s.color}66;border-radius:2px"></div>`:""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:100px"><span style="font-family:var(--mono);font-size:13px;font-weight:600;color:${p>=0?s.color:'var(--red)'}">${f1(p)}</span><span style="font-family:var(--mono);font-size:9px;color:var(--muted)">${s.benchmarkName} ${f1(b)}</span></div><div style="min-width:64px;text-align:right">${b!=null?`<span style="font-family:var(--mono);font-size:11px;${(p-b)>=0?'color:var(--green)':'color:var(--red)'}">α ${f1(p-b)}</span>`:""}</div></div>`;
