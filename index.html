@@ -358,6 +358,11 @@ function getS(id){
     assetClasses:  live.assetClasses|| null,
     mwrrYtd:       live.mwrrYtd     ?? null,
     ytdPct:        live.ytdPct      ?? null,   // E17 year sheet
+    ytdStrat:      live.ytdStrat    ?? null,   // MP11
+    ytdBench:      live.ytdBench    ?? null,   // MP7
+    mwrrStrat:     live.mwrrStrat   ?? null,   // MO11
+    mwrrBench:     live.mwrrBench   ?? null,   // MO7
+    perfTarget:    live.metrics?.perfTarget ?? null,  // Portfolio!F6
     benchmarkName: live.benchmarkName || base.benchmarkName,
     holdings:      MOCK_HOLD[id]||[],
   };
@@ -521,9 +526,10 @@ function renderStratTab(id){
   const port=ytd?ytd.portfolio:MOCK_YTD[id].portfolio;
   const benc=ytd?ytd.benchmark:MOCK_YTD[id].benchmark;
   const isReal=!!(ytd&&ytd.isReal);
-  // YTD % — prefer direct value from E17, fallback to computed from series
+  // YTD % — prefer MP11 (displayed value), fallback to E17, fallback to series
   const ytdPctSeries = port.length>1 ? ((port.at(-1)/port[0]-1)*100) : null;
-  const ytdPct = s.ytdPct ?? ytdPctSeries;
+  const ytdPct  = s.ytdStrat ?? s.ytdPct ?? ytdPctSeries;
+  const bPctDisplay = s.ytdBench ?? bPct;   // MP7 for benchmark display
   const bPct=(benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
 
   document.getElementById("tab-"+id).innerHTML=`
@@ -540,6 +546,30 @@ function renderStratTab(id){
         <div class="s-ytd-num ${pCls(ytdPct)}" style="color:${(ytdPct??0)>=0?s.color:'var(--red)'}">${f1(ytdPct)}</div>
       </div>
     </div>
+    <!-- MWRR / Target sub-header strip -->
+    <div style="display:flex;align-items:center;gap:24px;padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg2)">
+      ${s.perfTarget!=null?`<div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">Perf. Target</span>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:var(--muted)">${f1(s.perfTarget)}</span>
+      </div>`:""}
+      ${s.mwrrStrat!=null?`
+      <div style="width:1px;height:28px;background:var(--border);flex-shrink:0"></div>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">MWRR · Stratégie</span>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:${(s.mwrrStrat??0)>=0?s.color:'var(--red)'}">${f1(s.mwrrStrat)}</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">MWRR · ${s.benchmarkName}</span>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:var(--muted)">${f1(s.mwrrBench)}</span>
+      </div>
+      ${s.mwrrStrat!=null&&s.mwrrBench!=null?`
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">Alpha MWRR</span>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:600;${(s.mwrrStrat-s.mwrrBench)>=0?'color:var(--green)':'color:var(--red)'}">${f1(s.mwrrStrat-s.mwrrBench)}</span>
+      </div>`:""}`:""}
+      <span style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-left:auto;max-width:200px;line-height:1.4;text-align:right">Adjusted Money Weighted Return based on the YTD performances</span>
+    </div>
+
     <div style="padding:14px 22px;border-bottom:1px solid var(--border)">
       <div class="box-label" style="margin-bottom:10px">Performance YTD vs Benchmark · Base 100${isReal?" · Échelle logarithmique · Données réelles":""}</div>
       <div class="perf-strip" style="margin-bottom:14px">
@@ -547,7 +577,7 @@ function renderStratTab(id){
         <span class="ps-val ${pCls(ytdPct)}" style="color:${(ytdPct??0)>=0?s.color:'var(--red)'}">${f1(ytdPct)}</span>
         <div class="divider-v"></div>
         <div class="ps-bench-wrap"><span class="ps-bench-lbl">${s.benchmarkName}</span><span class="ps-bench-val ${pCls(bPct)}">${f1(bPct)}</span></div>
-        ${ytdPct!=null&&bPct!=null?`<span class="ps-diff ${pCls(ytdPct-bPct)}">Alpha YTD ${f1(ytdPct-bPct)}</span>`:""}
+        ${ytdPct!=null&&bPctDisplay!=null?`<span class="ps-diff ${pCls(ytdPct-bPctDisplay)}">Alpha YTD ${f1(ytdPct-bPctDisplay)}</span>`:""}
       </div>
       <div class="ch ch-md"><canvas id="ytd-${id}"></canvas></div>
       <div class="legend" style="margin-top:10px">
@@ -565,7 +595,7 @@ function renderStratTab(id){
         </div>
         <div class="mc" style="flex:1;margin:0">
           <div class="mc-lbl">Alpha vs ${s.benchmarkName}</div>
-          <div class="mc-val ${pCls(s.mwrrYtd!=null&&bPct!=null?s.mwrrYtd-bPct:null)}" style="font-size:28px">${s.mwrrYtd!=null&&bPct!=null?f1(s.mwrrYtd-bPct):"—"}</div>
+          <div class="mc-val ${pCls(s.mwrrYtd!=null&&bPctDisplay!=null?s.mwrrYtd-bPctDisplay:null)}" style="font-size:28px">${s.mwrrYtd!=null&&bPctDisplay!=null?f1(s.mwrrYtd-bPctDisplay):"—"}</div>
           <div class="mc-sub">MWRR YTD vs performance benchmark</div>
         </div>
       </div>
@@ -649,7 +679,7 @@ function renderOverview(){
   const all=FALLBACK.map(b=>getS(b.id));
   const el=document.getElementById("tab-overview");
   const metrics=[
-    {lbl:"YTD",    vals:all.map(s=>s.ytdPct??s.m.ttm), fmt:f1, inv:false},
+    {lbl:"YTD",    vals:all.map(s=>s.ytdStrat??s.ytdPct??s.m.ttm), fmt:f1, inv:false},
     {lbl:"TTM",    vals:all.map(s=>s.m.ttm),      fmt:f1, inv:false},
     // CAGR removed (no longer connected)
     {lbl:"Sharpe", vals:all.map(s=>s.m.sharpe),    fmt:fd, inv:false},
@@ -692,7 +722,7 @@ function renderOverview(){
   <div class="box">
     <div class="box-hd"><span class="box-label">Performance Signals · YTD</span></div>
     <div class="box-body">${all.map(s=>{
-      const p = s.ytdPct ?? (s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):(s.m.ttm??0));
+      const p = s.ytdStrat ?? s.ytdPct ?? (s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):(s.m.ttm??0));
       const b=s.ytdSeries&&s.ytdSeries.benchmark.at(-1)!=null?((s.ytdSeries.benchmark.at(-1)/100-1)*100):null;
       const mx=Math.max(...all.map(x=>x.ytdSeries?((x.ytdSeries.portfolio.at(-1)/x.ytdSeries.portfolio[0]-1)*100):(x.m.ttm??0)))*1.25;
       return`<div class="signal-ticker"><span style="font-family:var(--display);font-size:13px;font-weight:700;color:${s.color};width:120px;flex-shrink:0">${s.displayName}</span><div style="flex:1;position:relative;height:28px"><div style="position:absolute;top:2px;left:0;right:0;height:10px;background:var(--dim);border-radius:2px;overflow:hidden"><div style="height:100%;width:${(Math.max(0,p)/mx*100).toFixed(1)}%;background:${s.color};border-radius:2px;opacity:.65"></div></div><div style="position:absolute;bottom:2px;left:0;right:0;height:10px;background:var(--dim);border-radius:2px;overflow:hidden">${b!=null?`<div style="height:100%;width:${(Math.max(0,b)/mx*100).toFixed(1)}%;background:${s.color}66;border-radius:2px"></div>`:""}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:100px"><span style="font-family:var(--mono);font-size:13px;font-weight:600;color:${p>=0?s.color:'var(--red)'}">${f1(p)}</span><span style="font-family:var(--mono);font-size:9px;color:var(--muted)">${s.benchmarkName} ${f1(b)}</span></div><div style="min-width:64px;text-align:right">${b!=null?`<span style="font-family:var(--mono);font-size:11px;${(p-b)>=0?'color:var(--green)':'color:var(--red)'}">α ${f1(p-b)}</span>`:""}</div></div>`;
