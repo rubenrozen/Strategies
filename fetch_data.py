@@ -376,13 +376,16 @@ def main():
         # Year tab — dynamic name (e.g. "2026")
         year_name = str(datetime.now(timezone.utc).year)
         mwrr_ytd = None
+        ytd_pct  = None
         try:
             sh = gc.open_by_key(sid)
             ws_year = sh.worksheet(year_name)
             year_rows = ws_year.get_all_values()
-            raw_mwrr = year_rows[15][4].strip() if len(year_rows) > 15 and len(year_rows[15]) > 4 else ""  # E16
-            mwrr_ytd = parse_float(raw_mwrr)
-            print(f"  Fetching year tab '{year_name}' → MWRR/CAGR YTD = {mwrr_ytd}")
+            raw_mwrr    = year_rows[15][4].strip() if len(year_rows) > 15 and len(year_rows[15]) > 4 else ""  # E16
+            raw_ytd_pct = year_rows[16][4].strip() if len(year_rows) > 16 and len(year_rows[16]) > 4 else ""  # E17
+            mwrr_ytd    = parse_float(raw_mwrr)
+            ytd_pct     = parse_float(raw_ytd_pct)
+            print(f"  Fetching year tab '{year_name}' → MWRR/CAGR={mwrr_ytd} · YTD%={ytd_pct}")
         except Exception as e:
             print(f"  ⚠  Year tab '{year_name}' not found or error: {e}")
 
@@ -397,6 +400,7 @@ def main():
 
         data = extract_strategy_data(lib_rows, prt_rows)
         data["mwrrYtd"]      = mwrr_ytd
+        data["ytdPct"]       = ytd_pct
         data["assetClasses"] = extract_asset_classes(charts_rows) if charts_rows else []
         data["id"]            = strat_cfg["id"]
         data["displayName"]   = strat_cfg["display_name"]
