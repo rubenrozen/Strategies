@@ -1,0 +1,46 @@
+{
+  "_comment": "Les Sheet IDs sont dans les GitHub Secrets (VALUEUNDERFLOW_SHEET_ID, TRENDSPOTTING_SHEET_ID, NEXTHORIZON_SHEET_ID). Seuls les GIDs et métadonnées sont ici. Trouve le GID d'un onglet dans l'URL quand tu le sélectionnes: ...#gid=[GID]",
+  "correlation": {
+    "_comment": "Fichier séparé 'Strategies correlation matrices', onglet 'Correlation'",
+    "sheet_id_env": "CORRELATION_SHEET_ID",
+    "gid": "0"
+  },
+  "strategies": [
+    {
+      "id": "valueunderflow",
+      "display_name": "Value Underflow",
+      "color": "#4e94f7",
+      "tag": "Agressif · Haute Conviction · Long Terme",
+      "benchmark_name": "S&P 500 Growth",
+      "sheet_id_env": "VALUEUNDERFLOW_SHEET_ID",
+      "tabs": {
+        "portfolio_library_gid": "0",
+        "portfolio_gid": "111111111"
+      }
+    },
+    {
+      "id": "trendspotting",
+      "display_name": "Trend Spotting",
+      "color": "#e8a020",
+      "tag": "Momentum · Systématique · Multi-Asset",
+      "benchmark_name": "MSCI World",
+      "sheet_id_env": "TRENDSPOTTING_SHEET_ID",
+      "tabs": {
+        "portfolio_library_gid": "0",
+        "portfolio_gid": "111111111"
+      }
+    },
+    {
+      "id": "nexthorizon",
+      "display_name": "Next Horizon",
+      "color": "#1fcfa8",
+      "tag": "Capital Preservation · Faible Volatilité",
+      "benchmark_name": "Portfolio 60/40",
+      "sheet_id_env": "NEXTHORIZON_SHEET_ID",
+      "tabs": {
+        "portfolio_library_gid": "0",
+        "portfolio_gid": "111111111"
+      }
+    }
+  ]
+}
