@@ -116,28 +116,11 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
     # ── Portfolio library ──────────────────────────────────────────────────
     if lib_rows:
         result["title"]           = safe_get(lib_rows, 7, "T")
-        result["benchmarkName"]   = safe_get(lib_rows, 1, "H")   # H1
+        result["benchmarkName"]   = safe_get(lib_rows, 1, "K")   # K1
         result["description"] = safe_get(lib_rows, 8, "T")
 
-        dates, portfolio, benchmark = [], [], []
-        col_a, col_g, col_h = col_letter_to_idx("A"), col_letter_to_idx("G"), col_letter_to_idx("H")
-
-        for row_0 in range(2, len(lib_rows)):
-            row = lib_rows[row_0]
-            raw_date = row[col_a].strip() if col_a < len(row) else ""
-            raw_port = row[col_g].strip() if col_g < len(row) else ""
-            raw_benc = row[col_h].strip() if col_h < len(row) else ""
-            if not raw_date or not raw_port: continue
-            iso_date = parse_date(raw_date)
-            if iso_date is None: continue
-            pf_val = parse_float(raw_port)
-            bm_val = parse_float(raw_benc)
-            if pf_val is None: continue
-            dates.append(iso_date)
-            portfolio.append(round(pf_val, 4))
-            benchmark.append(round(bm_val, 4) if bm_val is not None else None)
-
-        result["ytd"] = {"dates": dates, "portfolio": portfolio, "benchmark": benchmark}
+        # YTD series now loaded from year sheet (e.g. "2026") in main()
+        result["ytd"] = {"dates": [], "portfolio": [], "benchmark": []}
     else:
         result["fetchError"] = True
         result["ytd"] = {"dates": [], "portfolio": [], "benchmark": []}
@@ -151,6 +134,7 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
             "sharpe":         parse_float(safe_get(prt_rows, 4,  "C")),
             "sortino":        parse_float(safe_get(prt_rows, 5,  "C")),
             "sortinoTarget":  parse_float(safe_get(prt_rows, 6,  "F")),
+            "perfTarget":     parse_float(safe_get(prt_rows, 6,  "F")),   # F6 — performance target
             "ttm":            parse_float(safe_get(prt_rows, 4,  "F")),
             "volatility":     parse_float(safe_get(prt_rows, 18, "C")),
             "varParametric":  parse_float(safe_get(prt_rows, 19, "F")),
@@ -217,6 +201,40 @@ def extract_currencies(prt_rows: list) -> list:
     return result
 
 
+
+
+def extract_ytd_from_year(year_rows: list) -> dict:
+    """Extract YTD series from year sheet.
+    Dates in col MJ (347), portfolio in col MK (348), benchmark in col ML (349).
+    Series starts at row 7 (0-based index 6). Skips empty and future dates.
+    """
+    COL_DATE = 347   # MJ
+    COL_PORT = 348   # MK
+    COL_BENC = 349   # ML
+    START    = 6     # row 7, 0-based
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    dates, portfolio, benchmark = [], [], []
+
+    for row_0 in range(START, len(year_rows)):
+        row = year_rows[row_0]
+        raw_date = row[COL_DATE].strip() if COL_DATE < len(row) else ""
+        raw_port = row[COL_PORT].strip() if COL_PORT < len(row) else ""
+        raw_benc = row[COL_BENC].strip() if COL_BENC < len(row) else ""
+
+        if not raw_date or not raw_port: continue
+        iso_date = parse_date(raw_date)
+        if iso_date is None: continue
+        if iso_date > today: continue          # skip future dates
+        pf_val = parse_float(raw_port)
+        bm_val = parse_float(raw_benc)
+        if pf_val is None: continue
+
+        dates.append(iso_date)
+        portfolio.append(round(pf_val, 4))
+        benchmark.append(round(bm_val, 4) if bm_val is not None else None)
+
+    return {"dates": dates, "portfolio": portfolio, "benchmark": benchmark}
 
 # ─── Sector allocation ────────────────────────────────────────────────────────
 
@@ -375,17 +393,31 @@ def main():
 
         # Year tab — dynamic name (e.g. "2026")
         year_name = str(datetime.now(timezone.utc).year)
-        mwrr_ytd = None
-        ytd_pct  = None
+        mwrr_ytd   = None
+        ytd_pct    = None
+        ytd_strat  = None
+        ytd_bench  = None
+        mwrr_strat = None
+        mwrr_bench = None
+        ytd_series = {"dates": [], "portfolio": [], "benchmark": []}
         try:
             sh = gc.open_by_key(sid)
             ws_year = sh.worksheet(year_name)
             year_rows = ws_year.get_all_values()
-            raw_mwrr    = year_rows[15][4].strip() if len(year_rows) > 15 and len(year_rows[15]) > 4 else ""  # E16
-            raw_ytd_pct = year_rows[16][4].strip() if len(year_rows) > 16 and len(year_rows[16]) > 4 else ""  # E17
-            mwrr_ytd    = parse_float(raw_mwrr)
-            ytd_pct     = parse_float(raw_ytd_pct)
-            print(f"  Fetching year tab '{year_name}' → MWRR/CAGR={mwrr_ytd} · YTD%={ytd_pct}")
+            raw_mwrr      = year_rows[15][4].strip()   if len(year_rows) > 15  and 4   < len(year_rows[15])  else ""  # E16
+            raw_ytd_pct   = year_rows[16][4].strip()   if len(year_rows) > 16  and 4   < len(year_rows[16])  else ""  # E17
+            raw_ytd_strat  = year_rows[10][353].strip() if len(year_rows) > 10 and 353 < len(year_rows[10]) else ""  # MP11
+            raw_ytd_bench  = year_rows[6][353].strip()  if len(year_rows) > 6  and 353 < len(year_rows[6])  else ""  # MP7
+            raw_mwrr_strat = year_rows[10][352].strip() if len(year_rows) > 10 and 352 < len(year_rows[10]) else ""  # MO11
+            raw_mwrr_bench = year_rows[6][352].strip()  if len(year_rows) > 6  and 352 < len(year_rows[6])  else ""  # MO7
+            mwrr_ytd      = parse_float(raw_mwrr)
+            ytd_pct       = parse_float(raw_ytd_pct)
+            ytd_strat     = parse_float(raw_ytd_strat)
+            ytd_bench     = parse_float(raw_ytd_bench)
+            mwrr_strat    = parse_float(raw_mwrr_strat)
+            mwrr_bench    = parse_float(raw_mwrr_bench)
+            ytd_series    = extract_ytd_from_year(year_rows)
+            print(f"  Year tab '{year_name}' → MWRR={mwrr_ytd} · YTD strat={ytd_strat} bench={ytd_bench} · MWRR strat={mwrr_strat} bench={mwrr_bench} · {len(ytd_series['dates'])} pts")
         except Exception as e:
             print(f"  ⚠  Year tab '{year_name}' not found or error: {e}")
 
@@ -401,6 +433,11 @@ def main():
         data = extract_strategy_data(lib_rows, prt_rows)
         data["mwrrYtd"]      = mwrr_ytd
         data["ytdPct"]       = ytd_pct
+            data["ytdStrat"]     = ytd_strat    # MP11 — displayed strategy YTD
+        data["ytdBench"]     = ytd_bench    # MP7  — displayed benchmark YTD
+        data["mwrrStrat"]    = mwrr_strat   # MO11 — MWRR strategy
+        data["mwrrBench"]    = mwrr_bench   # MO7  — MWRR benchmark
+        data["ytd"]          = ytd_series
         data["assetClasses"] = extract_asset_classes(charts_rows) if charts_rows else []
         data["id"]            = strat_cfg["id"]
         data["displayName"]   = strat_cfg["display_name"]
