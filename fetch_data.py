@@ -433,7 +433,7 @@ def main():
         data = extract_strategy_data(lib_rows, prt_rows)
         data["mwrrYtd"]      = mwrr_ytd
         data["ytdPct"]       = ytd_pct
-            data["ytdStrat"]     = ytd_strat    # MP11 — displayed strategy YTD
+        data["ytdStrat"]     = ytd_strat    # MP11 — displayed strategy YTD
         data["ytdBench"]     = ytd_bench    # MP7  — displayed benchmark YTD
         data["mwrrStrat"]    = mwrr_strat   # MO11 — MWRR strategy
         data["mwrrBench"]    = mwrr_bench   # MO7  — MWRR benchmark
