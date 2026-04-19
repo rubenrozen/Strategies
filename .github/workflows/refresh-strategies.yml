@@ -24,11 +24,12 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install gspread google-auth
 
       - name: Fetch strategies data from Google Sheets
         run: python fetch_data.py
         env:
+          GOOGLE_CREDENTIALS_JSON:  ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
           VALUEUNDERFLOW_SHEET_ID:  ${{ secrets.VALUEUNDERFLOW_SHEET_ID }}
           TRENDSPOTTING_SHEET_ID:   ${{ secrets.TRENDSPOTTING_SHEET_ID }}
           NEXTHORIZON_SHEET_ID:     ${{ secrets.NEXTHORIZON_SHEET_ID }}
