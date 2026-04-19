@@ -517,6 +517,42 @@ function renderCurrencies(s){
       </tbody>
     </table>`;
 }
+
+/* ══ Build MWRR/Target sub-header strip (avoids nested template literal issues) ══ */
+function buildMwrrStrip(s){
+  const mono = "font-family:var(--mono);font-size:";
+  const lbl  = mono+"8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)";
+  const sep  = '<div style="width:1px;height:28px;background:var(--border);flex-shrink:0"></div>';
+
+  function cell(label, val, color){
+    return '<div style="display:flex;flex-direction:column;gap:2px">'
+      + '<span style="'+lbl+'">'+label+'</span>'
+      + '<span style="'+mono+'15px;font-weight:600;color:'+color+'">'+val+'</span>'
+      + '</div>';
+  }
+
+  let parts = [];
+
+  if(s.perfTarget != null)
+    parts.push(cell("Perf. Target", f1(s.perfTarget), "var(--muted)"));
+
+  if(s.mwrrStrat != null){
+    if(parts.length) parts.push(sep);
+    parts.push(cell("MWRR · Stratégie",    f1(s.mwrrStrat), (s.mwrrStrat>=0?s.color:"var(--red)")));
+    parts.push(cell("MWRR · "+s.benchmarkName, f1(s.mwrrBench), "var(--muted)"));
+    if(s.mwrrStrat != null && s.mwrrBench != null){
+      const alpha = s.mwrrStrat - s.mwrrBench;
+      parts.push(cell("Alpha MWRR", f1(alpha), alpha>=0?"var(--green)":"var(--red)"));
+    }
+  }
+
+  if(!parts.length) return "";
+
+  return '<div style="display:flex;align-items:center;gap:16px;padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg2)">'
+    + parts.join("")
+    + '<span style="'+mono+'8px;color:var(--dim);margin-left:auto;max-width:200px;line-height:1.5;text-align:right">Adjusted Money Weighted Return based on the YTD performances</span>'
+    + '</div>';
+}
 /* ══ Render strategy tab ══ */
 function renderStratTab(id){
   const s=getS(id);
@@ -546,29 +582,8 @@ function renderStratTab(id){
         <div class="s-ytd-num ${pCls(ytdPct)}" style="color:${(ytdPct??0)>=0?s.color:'var(--red)'}">${f1(ytdPct)}</div>
       </div>
     </div>
-    <!-- MWRR / Target sub-header strip -->
-    <div style="display:flex;align-items:center;gap:24px;padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg2)">
-      ${s.perfTarget!=null?`<div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">Perf. Target</span>
-        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:var(--muted)">${f1(s.perfTarget)}</span>
-      </div>`:""}
-      ${s.mwrrStrat!=null?`
-      <div style="width:1px;height:28px;background:var(--border);flex-shrink:0"></div>
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">MWRR · Stratégie</span>
-        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:${(s.mwrrStrat??0)>=0?s.color:'var(--red)'}">${f1(s.mwrrStrat)}</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">MWRR · ${s.benchmarkName}</span>
-        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:var(--muted)">${f1(s.mwrrBench)}</span>
-      </div>
-      ${s.mwrrStrat!=null&&s.mwrrBench!=null?`
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">Alpha MWRR</span>
-        <span style="font-family:var(--mono);font-size:15px;font-weight:600;${(s.mwrrStrat-s.mwrrBench)>=0?'color:var(--green)':'color:var(--red)'}">${f1(s.mwrrStrat-s.mwrrBench)}</span>
-      </div>`:""}`:""}
-      <span style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-left:auto;max-width:200px;line-height:1.4;text-align:right">Adjusted Money Weighted Return based on the YTD performances</span>
-    </div>
+    <!-- MWRR / Target sub-header strip — built via function to avoid nested backtick issues -->
+    ${buildMwrrStrip(s)}
 
     <div style="padding:14px 22px;border-bottom:1px solid var(--border)">
       <div class="box-label" style="margin-bottom:10px">Performance YTD vs Benchmark · Base 100${isReal?" · Échelle logarithmique · Données réelles":""}</div>
