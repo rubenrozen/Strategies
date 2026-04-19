@@ -568,6 +568,17 @@ function renderStratTab(id){
   const bPctDisplay = s.ytdBench ?? bPct;   // MP7 for benchmark display
   const bPct=(benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
 
+  // Pre-compute conditional HTML snippets (avoids nested backtick issues)
+  const _alphaYtd = (ytdPct!=null&&bPctDisplay!=null)
+    ? '<span class="ps-diff '+pCls(ytdPct-bPctDisplay)+'">Alpha YTD '+f1(ytdPct-bPctDisplay)+'</span>'
+    : '';
+  const _acBox = (s.assetClasses&&s.assetClasses.length)
+    ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d'Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>'
+    : '';
+  const _sortino = (m.sortino!=null)
+    ? '<div class="sortino-wrap"><div class="sortino-track"><div class="sortino-fill" style="width:'+Math.min(100,m.sortino/3*100).toFixed(1)+'%;background:'+(m.sortino>=2?'var(--green)':'var(--c1)')+'"></div></div><span class="sortino-lbl">/ 3.0</span></div>'
+    : '';
+
   document.getElementById("tab-"+id).innerHTML=`
 <div class="gap14">
   <div class="box">
@@ -592,7 +603,7 @@ function renderStratTab(id){
         <span class="ps-val ${pCls(ytdPct)}" style="color:${(ytdPct??0)>=0?s.color:'var(--red)'}">${f1(ytdPct)}</span>
         <div class="divider-v"></div>
         <div class="ps-bench-wrap"><span class="ps-bench-lbl">${s.benchmarkName}</span><span class="ps-bench-val ${pCls(bPct)}">${f1(bPct)}</span></div>
-        ${ytdPct!=null&&bPctDisplay!=null?`<span class="ps-diff ${pCls(ytdPct-bPctDisplay)}">Alpha YTD ${f1(ytdPct-bPctDisplay)}</span>`:""}
+        ${_alphaYtd}
       </div>
       <div class="ch ch-md"><canvas id="ytd-${id}"></canvas></div>
       <div class="legend" style="margin-top:10px">
@@ -620,13 +631,7 @@ function renderStratTab(id){
     <div class="box"><div class="box-hd"><span class="box-label">Allocation Sectorielle</span><span class="box-sub">${s.sectors?"Données réelles":"Données simulées"}</span></div><div class="box-body"><div class="ch ch-md"><canvas id="sec-${id}"></canvas></div><div class="legend" id="sec-legend-${id}" style="margin-top:10px"></div></div></div>
     <div class="box"><div class="box-hd"><span class="box-label">Exposition Devises</span><span class="box-sub">Balance cash · Exposition totale</span></div><div class="box-body">${renderCurrencies(s)}</div></div>
   </div>
-  ${s.assetClasses&&s.assetClasses.length?`
-  <div class="box">
-    <div class="box-hd"><span class="box-label">Répartition par Classe d'Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div>
-    <div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-${id}"></canvas></div>
-      <div id="ac-legend-${id}" class="legend" style="margin-top:10px"></div>
-    </div>
-  </div>`:""}
+  ${_acBox}
   <div class="box">
     <div class="box-hd"><span class="box-label">Composition du Portefeuille</span><span class="box-sub" id="comp-src-${id}">${s.composition?"Données réelles · Google Sheets":"Données simulées"}</span></div>
     <div class="box-body" id="comp-body-${id}">${renderComposition(s, id)}</div>
@@ -639,7 +644,7 @@ function renderStratTab(id){
       <div class="mc-lbl">Sortino Ratio</div>
       <div class="mc-val ${(m.sortino??0)>=2?'pos':'neu'}">${fd(m.sortino)}</div>
       <div class="mc-sub">Return cible ${m.sortinoTarget!=null?m.sortinoTarget.toFixed(1)+"%":"—"}</div>
-      ${m.sortino!=null?`<div class="sortino-wrap"><div class="sortino-track"><div class="sortino-fill" style="width:${Math.min(100,m.sortino/3*100).toFixed(1)}%;background:${m.sortino>=2?'var(--green)':'var(--c1)'}"></div></div><span class="sortino-lbl">/ 3.0</span></div>`:""}
+      ${_sortino}
     </div>
   </div>
   <div class="box">
