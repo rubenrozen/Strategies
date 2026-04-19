@@ -353,7 +353,11 @@ function getS(id){
     currencies: MOCK_CUR[id]||[],
     portfolioTotal: live.portfolioTotal || null,
     composition:   live.composition || null,
-    currencies:    live.currencies  || null,  // null = show mock chart
+    currencies:    live.currencies  || null,
+    sectors:       live.sectors     || null,   // null = show mock donut
+    assetClasses:  live.assetClasses|| null,
+    mwrrYtd:       live.mwrrYtd     ?? null,
+    benchmarkName: live.benchmarkName || base.benchmarkName,
     holdings:      MOCK_HOLD[id]||[],
   };
 }
@@ -548,25 +552,33 @@ function renderStratTab(id){
         <div class="leg-item"><div class="leg-dash" style="border-color:${s.color}66"></div>${s.benchmarkName}</div>
       </div>
     </div>
-    <div style="padding:14px 22px;border-bottom:1px solid var(--border)">
-      <div class="box-label" style="margin-bottom:10px">MWRR · CAGR vs Benchmark (depuis inception)</div>
-      <div style="display:flex;gap:12px">
-        <div class="perf-strip" style="flex:1"><span class="ps-label">MWRR</span><span class="ps-val ${pCls(s.mwrr)}" style="color:${(s.mwrr??0)>=0?s.color:'var(--red)'}">${f1(s.mwrr)}</span><div class="divider-v"></div><div class="ps-bench-wrap"><span class="ps-bench-lbl">${s.benchmarkName}</span><span class="ps-bench-val ${pCls(s.bMwrr)}">${f1(s.bMwrr)}</span></div><span class="ps-diff ${pCls((s.mwrr??0)-(s.bMwrr??0))}">${f1((s.mwrr??0)-(s.bMwrr??0))}</span></div>
-        <div class="perf-strip" style="flex:1"><span class="ps-label">CAGR</span><span class="ps-val ${pCls(s.cagr)}" style="color:${(s.cagr??0)>=0?s.color:'var(--red)'}">${f1(s.cagr)}</span><div class="divider-v"></div><div class="ps-bench-wrap"><span class="ps-bench-lbl">${s.benchmarkName}</span><span class="ps-bench-val ${pCls(s.bCagr)}">${f1(s.bCagr)}</span></div><span class="ps-diff ${pCls((s.cagr??0)-(s.bCagr??0))}">${f1((s.cagr??0)-(s.bCagr??0))}</span></div>
-      </div>
-    </div>
     <div style="padding:14px 22px">
-      <div class="ch ch-md"><canvas id="cagr-${id}"></canvas></div>
-      <div class="legend" style="margin-top:10px">
-        <div class="leg-item"><div class="leg-line" style="background:${s.color}"></div>${s.displayName} (base 100)</div>
-        <div class="leg-item"><div class="leg-dash" style="border-color:${s.color}66"></div>${s.benchmarkName}</div>
+      <div class="box-label" style="margin-bottom:10px">MWRR · CAGR YTD <span style="color:var(--dim);font-size:8px;margin-left:6px">Feuille ${new Date().getFullYear()}</span></div>
+      <div style="display:flex;gap:12px">
+        <div class="mc" style="flex:1;margin:0">
+          <div class="mc-lbl">MWRR / CAGR YTD</div>
+          <div class="mc-val ${pCls(s.mwrrYtd)}" style="color:${(s.mwrrYtd??0)>=0?s.color:'var(--red)'};font-size:28px">${f1(s.mwrrYtd)}</div>
+          <div class="mc-sub">Money-Weighted Return ajusté · année en cours</div>
+        </div>
+        <div class="mc" style="flex:1;margin:0">
+          <div class="mc-lbl">Alpha vs ${s.benchmarkName}</div>
+          <div class="mc-val ${pCls(s.mwrrYtd!=null&&ytdBPerf!=null?s.mwrrYtd-ytdBPerf:null)}" style="font-size:28px">${s.mwrrYtd!=null&&ytdBPerf!=null?f1(s.mwrrYtd-ytdBPerf):"—"}</div>
+          <div class="mc-sub">MWRR YTD vs performance benchmark</div>
+        </div>
       </div>
     </div>
   </div>
   <div class="g2">
-    <div class="box"><div class="box-hd"><span class="box-label">Allocation Sectorielle</span></div><div class="box-body"><div class="ch ch-md"><canvas id="sec-${id}"></canvas></div><div class="legend" style="margin-top:10px">${s.sectors.map((x,i)=>`<div class="leg-item"><div style="width:8px;height:8px;border-radius:2px;background:${PAL_S[i]||'#666'};flex-shrink:0"></div>${x.n} — ${x.v}%</div>`).join("")}</div></div></div>
+    <div class="box"><div class="box-hd"><span class="box-label">Allocation Sectorielle</span><span class="box-sub">${s.sectors?"Données réelles":"Données simulées"}</span></div><div class="box-body"><div class="ch ch-md"><canvas id="sec-${id}"></canvas></div><div class="legend" id="sec-legend-${id}" style="margin-top:10px"></div></div></div>
     <div class="box"><div class="box-hd"><span class="box-label">Exposition Devises</span><span class="box-sub">Balance cash · Exposition totale</span></div><div class="box-body">${renderCurrencies(s)}</div></div>
   </div>
+  ${s.assetClasses&&s.assetClasses.length?`
+  <div class="box">
+    <div class="box-hd"><span class="box-label">Répartition par Classe d'Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div>
+    <div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-${id}"></canvas></div>
+      <div id="ac-legend-${id}" class="legend" style="margin-top:10px"></div>
+    </div>
+  </div>`:""}
   <div class="box">
     <div class="box-hd"><span class="box-label">Composition du Portefeuille</span><span class="box-sub" id="comp-src-${id}">${s.composition?"Données réelles · Google Sheets":"Données simulées"}</span></div>
     <div class="box-body" id="comp-body-${id}">${renderComposition(s, id)}</div>
@@ -598,11 +610,29 @@ function renderStratTab(id){
     {label:s.displayName,  data:port,borderColor:s.color,      backgroundColor:"transparent",borderWidth:2,  tension:.35,pointRadius:0,pointHoverRadius:4,fill:false,spanGaps:true},
     {label:s.benchmarkName,data:benc,borderColor:s.color+"66", backgroundColor:"transparent",borderWidth:1.5,tension:.35,pointRadius:0,pointHoverRadius:3,fill:false,spanGaps:true,borderDash:[5,5]},
   ]},options:lineOpts(isReal)});
-  mkChart("cagr-"+id,{type:"line",data:{labels:["2020","2021","2022","2023","2024","2025"],datasets:[
-    {label:s.displayName,  data:s.cagrIdx, borderColor:s.color,     backgroundColor:"transparent",borderWidth:2,  tension:.3,pointRadius:3,pointHoverRadius:5,fill:false},
-    {label:s.benchmarkName,data:s.bCagrIdx,borderColor:s.color+"66",backgroundColor:"transparent",borderWidth:1.5,tension:.3,pointRadius:2,pointHoverRadius:4,fill:false,borderDash:[5,5]},
-  ]},options:lineOpts(false)});
-  mkChart("sec-"+id,{type:"doughnut",data:{labels:s.sectors.map(x=>x.n),datasets:[{data:s.sectors.map(x=>x.v),backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
+  // CAGR inception chart removed
+  // Sector donut — live or mock
+  {
+    const liveSec  = s.sectors && s.sectors.length;
+    const secLabels = liveSec ? s.sectors.map(x=>x.sector)  : MOCK_SEC[id].map(x=>x.n);
+    const secVals   = liveSec ? s.sectors.map(x=>x.pct)     : MOCK_SEC[id].map(x=>x.v);
+    mkChart("sec-"+id,{type:"doughnut",data:{labels:secLabels,datasets:[{data:secVals,backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
+    // Build legend
+    const secLegEl = document.getElementById("sec-legend-"+id);
+    if(secLegEl) secLegEl.innerHTML = secLabels.map((lbl,i)=>
+      `<div class="leg-item"><div style="width:8px;height:8px;border-radius:2px;background:${PAL_S[i]||'#666'};flex-shrink:0"></div>${lbl} — ${secVals[i]!=null?secVals[i].toFixed(1)+"%":"—"}</div>`
+    ).join("");
+  }
+  // Asset class donut
+  if(s.assetClasses && s.assetClasses.length){
+    const acLabels = s.assetClasses.map(x=>x.name);
+    const acVals   = s.assetClasses.map(x=>x.pct||0);
+    mkChart("ac-"+id,{type:"doughnut",data:{labels:acLabels,datasets:[{data:acVals,backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
+    const acLegEl = document.getElementById("ac-legend-"+id);
+    if(acLegEl) acLegEl.innerHTML = acLabels.map((lbl,i)=>
+      `<div class="leg-item"><div style="width:8px;height:8px;border-radius:2px;background:${PAL_S[i]||'#666'};flex-shrink:0"></div>${lbl} — ${acVals[i].toFixed(1)}%</div>`
+    ).join("");
+  }
   // currency display is now HTML (no Chart.js canvas)
 }
 
