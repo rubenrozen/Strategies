@@ -564,16 +564,16 @@ function renderStratTab(id){
   const isReal=!!(ytd&&ytd.isReal);
   // YTD % — prefer MP11 (displayed value), fallback to E17, fallback to series
   const ytdPctSeries = port.length>1 ? ((port.at(-1)/port[0]-1)*100) : null;
-  const ytdPct  = s.ytdStrat ?? s.ytdPct ?? ytdPctSeries;
-  const bPctDisplay = s.ytdBench ?? bPct;   // MP7 for benchmark display
-  const bPct=(benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
+  const ytdPct     = s.ytdStrat ?? s.ytdPct ?? ytdPctSeries;
+  const bPct       = (benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
+  const bPctDisplay = s.ytdBench ?? bPct;   // MP7 preferred, fallback to computed
 
   // Pre-compute conditional HTML snippets (avoids nested backtick issues)
   const _alphaYtd = (ytdPct!=null&&bPctDisplay!=null)
     ? '<span class="ps-diff '+pCls(ytdPct-bPctDisplay)+'">Alpha YTD '+f1(ytdPct-bPctDisplay)+'</span>'
     : '';
   const _acBox = (s.assetClasses&&s.assetClasses.length)
-    ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d'Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>'
+    ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d’Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>'
     : '';
   const _sortino = (m.sortino!=null)
     ? '<div class="sortino-wrap"><div class="sortino-track"><div class="sortino-fill" style="width:'+Math.min(100,m.sortino/3*100).toFixed(1)+'%;background:'+(m.sortino>=2?'var(--green)':'var(--c1)')+'"></div></div><span class="sortino-lbl">/ 3.0</span></div>'
