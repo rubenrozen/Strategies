@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-20T03:01:01Z",
+  "lastUpdated": "2026-04-20T03:10:48Z",
   "strategies": [
     {
       "fetchError": false,
@@ -717,16 +717,16 @@
           104.1
         ]
       },
-      "portfolioTotal": 84482.5,
+      "portfolioTotal": 84474.2,
       "metrics": {
-        "sharpe": 31.15,
+        "sharpe": 31.13,
         "sortino": 7.43,
         "sortinoTarget": 10.0,
         "perfTarget": 10.0,
-        "ttm": 78.03,
+        "ttm": 77.98,
         "volatility": 2.39,
-        "varParametric": 4907.0,
-        "varHistoric": 2649.0,
+        "varParametric": 4906.0,
+        "varHistoric": 2648.0,
         "varConditional": 3721.0
       },
       "composition": {
@@ -735,19 +735,19 @@
             "name": "Newmont Corp",
             "currency": "$",
             "sector": "Materials",
-            "value": 3964.26
+            "value": 3963.52
           },
           {
             "name": "Agnico Eagle",
             "currency": "$",
             "sector": "Materials",
-            "value": 4680.98
+            "value": 4680.1
           },
           {
             "name": "Wheaton Precious",
             "currency": "$",
             "sector": "Materials",
-            "value": 2592.59
+            "value": 2592.11
           },
           {
             "name": "Rheinmetall",
@@ -765,37 +765,37 @@
             "name": "Lockheed Martin",
             "currency": "$",
             "sector": "Industrial",
-            "value": 4533.98
+            "value": 4533.13
           },
           {
             "name": "Broadcom",
             "currency": "$",
             "sector": "Tech",
-            "value": 3458.44
+            "value": 3457.79
           },
           {
             "name": "Vertiv holdings",
             "currency": "$",
             "sector": "Tech",
-            "value": 5229.08
+            "value": 5228.1
           },
           {
             "name": "Microsoft",
             "currency": "$",
             "sector": "Tech",
-            "value": 1438.67
+            "value": 1438.4
           },
           {
             "name": "Crowdstrike",
             "currency": "$",
             "sector": "Tech",
-            "value": 2524.58
+            "value": 2524.11
           },
           {
             "name": "Palo Alto Network",
             "currency": "$",
             "sector": "Tech",
-            "value": 1713.48
+            "value": 1713.16
           },
           {
             "name": "Total Energies",
@@ -807,25 +807,25 @@
             "name": "Total Energies",
             "currency": "$",
             "sector": "Energy",
-            "value": 6271.4
+            "value": 6270.22
           },
           {
             "name": "Caterpillar",
             "currency": "$",
             "sector": "Industrial",
-            "value": 3380.04
+            "value": 3379.41
           },
           {
             "name": "Goldman Sachs",
             "currency": "$",
             "sector": "Finance",
-            "value": 2363.12
+            "value": 2362.67
           },
           {
             "name": "BNP Paribas",
             "currency": "$",
             "sector": "Finance",
-            "value": 2005.1
+            "value": 2004.72
           }
         ],
         "bonds": [],
@@ -847,32 +847,32 @@
       "sectors": [
         {
           "sector": "Industrial",
-          "value": 15572.57,
+          "value": 15571.09,
           "pct": 26.18
         },
         {
           "sector": "Tech",
-          "value": 14364.25,
+          "value": 14361.56,
           "pct": 24.15
         },
         {
           "sector": "Energy",
-          "value": 13937.45,
+          "value": 13936.27,
           "pct": 23.43
         },
         {
           "sector": "Materials",
-          "value": 11237.83,
+          "value": 11235.73,
           "pct": 18.89
         },
         {
           "sector": "Finance",
-          "value": 4368.22,
+          "value": 4367.39,
           "pct": 7.34
         }
       ],
-      "mwrrYtd": 132.36,
-      "ytdPct": 28.63,
+      "mwrrYtd": 132.29,
+      "ytdPct": 28.62,
       "ytdStrat": 19.14,
       "ytdBench": 4.1,
       "mwrrStrat": 79.74,
@@ -885,7 +885,7 @@
         },
         {
           "name": "Equity",
-          "value": 59480.33,
+          "value": 59472.02,
           "pct": 69.81
         },
         {
