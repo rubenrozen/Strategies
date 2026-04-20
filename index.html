@@ -388,7 +388,8 @@ function renderComposition(s, id){
   const comp = s.composition;
 
   // ── MOCK fallback (no live data yet) ──
-  if(!comp){
+  const hasLiveComp = comp && ["equities","bonds","crypto","futures"].some(k=>(comp[k]||[]).length>0);
+  if(!hasLiveComp){
     const wmax=Math.max(...s.holdings.flatMap(g=>g.items).map(h=>h.wt));
     return s.holdings.map(g=>`
       <div class="comp-section">
@@ -590,8 +591,9 @@ function buildCollapsibleHoldings(s, id){
     {key:"futures",  label:"Futures",             color:"#20c563"},
   ];
 
-  // ── Mock fallback ──
-  if(!comp){
+  // ── Mock fallback: use when no live data or all categories empty ──
+  const compHasData = comp && ["equities","bonds","crypto","futures"].some(k=>(comp[k]||[]).length>0);
+  if(!compHasData){
     return s.holdings.map((g,gi)=>{
       const cid = id+"-mock-"+gi;
       const count = g.items.length;
