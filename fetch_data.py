@@ -137,9 +137,9 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
             "perfTarget":     parse_float(safe_get(prt_rows, 6,  "F")),   # F6 — performance target
             "ttm":            parse_float(safe_get(prt_rows, 4,  "F")),
             "volatility":     parse_float(safe_get(prt_rows, 18, "C")),
-            "varParametric":  parse_float(safe_get(prt_rows, 19, "F")),
-            "varHistoric":    parse_float(safe_get(prt_rows, 20, "F")),
-            "varConditional": parse_float(safe_get(prt_rows, 21, "F")),
+            "varParametric":  parse_float(safe_get(prt_rows, 22, "F")),   # F22
+            "varHistoric":    parse_float(safe_get(prt_rows, 23, "F")),   # F23
+            "varConditional": parse_float(safe_get(prt_rows, 24, "F")),   # F24
         }
         result["composition"] = extract_composition(prt_rows)
         result["currencies"]  = extract_currencies(prt_rows)
