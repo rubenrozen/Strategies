@@ -605,18 +605,31 @@ function toggleCollapse(cid){
   const chev = document.getElementById("chev-"+cid);
   if(!body) return;
   const isOpen = !body.classList.contains("closed");
+
   if(isOpen){
-    body.style.maxHeight = body.scrollHeight+"px";
-    requestAnimationFrame(()=>{
-      body.style.maxHeight = "0px";
-      body.classList.add("closed");
-      if(chev) chev.classList.remove("open");
-    });
+    // Step 1: snapshot current real height as concrete px value
+    body.style.maxHeight = body.scrollHeight + "px";
+    // Step 2: force reflow so browser registers the concrete value
+    // before we change it — this guarantees the CSS transition fires
+    body.offsetHeight; // eslint-disable-line no-unused-expressions
+    // Step 3: animate to 0
+    body.style.maxHeight = "0px";
+    body.classList.add("closed");
+    if(chev) chev.classList.remove("open");
   } else {
+    // Start from a concrete 0 value so transition has a numeric start
     body.classList.remove("closed");
-    body.style.maxHeight = body.scrollHeight+"px";
+    body.style.maxHeight = "0px";
+    body.offsetHeight; // force reflow
+    // Animate to full content height
+    body.style.maxHeight = body.scrollHeight + "px";
     if(chev) chev.classList.add("open");
-    setTimeout(()=>{ body.style.maxHeight = "2000px"; }, 260);
+    // After transition completes, remove inline maxHeight so content
+    // can grow freely (e.g. if rows are added). Next close() will
+    // re-snapshot scrollHeight, which still works correctly.
+    setTimeout(() => {
+      if(!body.classList.contains("closed")) body.style.maxHeight = "";
+    }, 260);
   }
 }
 
