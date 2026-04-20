@@ -170,6 +170,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14
 .comp-table td.dim{color:var(--muted)}
 .comp-table td.val{color:var(--text);font-weight:500}
 .comp-badge{display:inline-block;padding:2px 6px;border-radius:3px;font-family:var(--mono);font-size:9px;background:var(--dim);color:var(--muted)}
+
+/* ── Collapsible holdings ── */
+.collapse-hd{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 18px;border-bottom:1px solid var(--border);user-select:none;transition:background .15s}
+.collapse-hd:hover{background:var(--bg2)}
+.collapse-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;margin-right:10px}
+.collapse-title{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);flex:1}
+.collapse-count{font-family:var(--mono);font-size:9px;color:var(--dim);margin-right:12px}
+.collapse-chevron{font-size:10px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.collapse-chevron.open{transform:rotate(180deg)}
+.collapse-body{overflow:hidden;transition:max-height .25s ease}
+.collapse-body.closed{max-height:0!important}
 </style>
 </head>
 <body>
@@ -567,6 +578,123 @@ function buildMwrrStrip(s){
   return out;
 }
 
+
+/* ══ Collapsible holdings by asset category ══ */
+function buildCollapsibleHoldings(s, id){
+  const comp = s.composition;
+
+  const CATS = [
+    {key:"equities", label:"Equities",           color:"#4e94f7"},
+    {key:"bonds",    label:"Bonds / Obligations", color:"#a78bfa"},
+    {key:"crypto",   label:"Crypto",              color:"#fb923c"},
+    {key:"futures",  label:"Futures",             color:"#20c563"},
+  ];
+
+  // ── Mock fallback ──
+  if(!comp){
+    return s.holdings.map((g,gi)=>{
+      const cid = id+"-mock-"+gi;
+      const count = g.items.length;
+      return '<div>'
+        +'<div class="collapse-hd" onclick="toggleCollapse(\''+cid+'\')">'
+        +  '<div class="collapse-dot" style="background:'+s.color+'"></div>'
+        +  '<span class="collapse-title">'+g.sector+'</span>'
+        +  '<span class="collapse-count">'+count+' position'+(count>1?'s':'')+'</span>'
+        +  '<span class="collapse-chevron open" id="chev-'+cid+'">▼</span>'
+        +'</div>'
+        +'<div class="collapse-body" id="body-'+cid+'" style="max-height:600px">'
+        +  '<div style="padding:0 18px">'
+        +  g.items.map(h=>{
+             const wmax = Math.max(...g.items.map(x=>x.wt));
+             return '<div class="holding-row">'
+               +'<span class="h-ticker">'+h.t+'</span>'
+               +'<span class="h-name">'+h.n+'</span>'
+               +'<div class="h-wt-wrap"><div class="h-bar"><div class="h-bar-fill" style="width:'+(h.wt/wmax*100).toFixed(1)+'%;background:'+s.color+'"></div></div>'
+               +'<span class="h-wt">'+h.wt.toFixed(1)+'%</span></div>'
+               +'<span class="h-perf '+pCls(h.ytd)+'">'+f1(h.ytd)+'</span>'
+               +'</div>';
+           }).join("")
+        +'</div></div></div>';
+    }).join("");
+  }
+
+  // ── Live data ──
+  const total = s.portfolioTotal;
+
+  return CATS.map(cat=>{
+    const items = comp[cat.key] || [];
+    if(!items.length) return "";
+    const cid = id+"-"+cat.key;
+    const count = items.length;
+
+    const rows = items.map(item=>{
+      const share = (total && item.value!=null) ? (Math.abs(item.value)/Math.abs(total)*100).toFixed(1)+"%" : "—";
+
+      if(cat.key==="equities") return '<div class="holding-row">'
+        +'<span class="h-ticker" style="color:'+cat.color+';width:auto;margin-right:10px">'+item.name+'</span>'
+        +'<span class="h-name">'+( item.sector||"")+'</span>'
+        +'<span style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-right:12px">'+( item.currency||"")+'</span>'
+        +'<span class="h-wt">'+share+'</span>'
+        +'</div>';
+
+      if(cat.key==="bonds") return '<div class="holding-row">'
+        +'<span class="h-ticker" style="color:'+cat.color+';width:auto;margin-right:10px">'+item.name+'</span>'
+        +'<span class="h-name">'+(item.underlying||"")+'</span>'
+        +'<span style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-right:12px">'+(item.currency||"")+'</span>'
+        +'<span class="h-wt">'+(item.quantity!=null?item.quantity.toFixed(0):"—")+'</span>'
+        +'</div>';
+
+      if(cat.key==="crypto") return '<div class="holding-row">'
+        +'<span class="h-ticker" style="color:'+cat.color+';width:auto;margin-right:10px">'+item.name+'</span>'
+        +'<span class="h-name"></span>'
+        +'<span class="h-wt">'+share+'</span>'
+        +'</div>';
+
+      if(cat.key==="futures") return '<div class="holding-row">'
+        +'<span class="h-ticker" style="color:'+cat.color+';width:auto;margin-right:10px">'+item.name+'</span>'
+        +'<span class="h-name">'+(item.underlying||"")+'</span>'
+        +'<span style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-right:12px">'+(item.currency||"")+'</span>'
+        +'<span class="h-wt">'+share+'</span>'
+        +'</div>';
+
+      return "";
+    }).join("");
+
+    return '<div>'
+      +'<div class="collapse-hd" onclick="toggleCollapse(\''+cid+'\')">'
+      +  '<div class="collapse-dot" style="background:'+cat.color+'"></div>'
+      +  '<span class="collapse-title">'+cat.label+'</span>'
+      +  '<span class="collapse-count">'+count+' position'+(count>1?'s':'')+'</span>'
+      +  '<span class="collapse-chevron open" id="chev-'+cid+'">▼</span>'
+      +'</div>'
+      +'<div class="collapse-body" id="body-'+cid+'" style="max-height:2000px">'
+      +  '<div style="padding:0 18px">'+rows+'</div>'
+      +'</div>'
+      +'</div>';
+  }).join("");
+}
+
+/* Toggle collapse */
+function toggleCollapse(cid){
+  const body = document.getElementById("body-"+cid);
+  const chev = document.getElementById("chev-"+cid);
+  if(!body) return;
+  const isOpen = !body.classList.contains("closed");
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight+"px";
+    requestAnimationFrame(()=>{
+      body.style.maxHeight = "0px";
+      body.classList.add("closed");
+      if(chev) chev.classList.remove("open");
+    });
+  } else {
+    body.classList.remove("closed");
+    body.style.maxHeight = body.scrollHeight+"px";
+    if(chev) chev.classList.add("open");
+    setTimeout(()=>{ body.style.maxHeight = "2000px"; }, 260);
+  }
+}
+
 /* ══ Render strategy tab ══ */
 function renderStratTab(id){
   const s=getS(id);
@@ -625,10 +753,7 @@ function renderStratTab(id){
     <div class="box"><div class="box-hd"><span class="box-label">Exposition Devises</span><span class="box-sub">Balance cash · Exposition totale</span></div><div class="box-body">${renderCurrencies(s)}</div></div>
   </div>
   ${_acBox}
-  <div class="box">
-    <div class="box-hd"><span class="box-label">Composition du Portefeuille</span><span class="box-sub" id="comp-src-${id}">${s.composition?"Données réelles · Google Sheets":"Données simulées"}</span></div>
-    <div class="box-body" id="comp-body-${id}">${renderComposition(s, id)}</div>
-  </div>
+
   <div class="g4">
     <div class="mc"><div class="mc-lbl">TTM (12 mois)</div><div class="mc-val ${pCls(m.ttm)}">${f1(m.ttm)}</div><div class="mc-sub">Trailing 12 months</div></div>
     <div class="mc"><div class="mc-lbl">Volatilité ann.</div><div class="mc-val neu">${m.volatility!=null?m.volatility.toFixed(1)+"%":"—"}</div><div class="mc-sub">Écart-type annualisé</div></div>
@@ -751,7 +876,14 @@ function renderOverview(){
   <div class="box"><div class="box-hd"><span class="box-label">Matrice de Corrélation · Stratégies</span><span class="box-sub">${liveCorr?"Données réelles · Strategies correlation matrices":"Données simulées"}</span></div>
     <div class="box-body"><div style="display:grid;grid-template-columns:140px repeat(3,1fr);gap:2px;max-width:600px"><div style="background:var(--bg2);border-radius:var(--rs) 0 0 0;padding:12px"></div>${all.map(s=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500;text-align:center">${s.displayName}</div>`).join("")}${all.map((s,i)=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500">${s.displayName}</div>${all.map((_,j)=>`<div style="padding:12px;background:${corrBg(corr[i][j],i,j)};text-align:center;font-family:var(--mono);font-size:13px;font-weight:${i===j?400:500};color:${i===j?'var(--muted)':'var(--text)'}">${corr[i][j]!=null?corr[i][j].toFixed(2):'—'}</div>`).join("")}`).join("")}</div></div>
   </div>
-</div>`;
+</div>
+  <div class="box" id="holdings-box-${id}">
+    <div class="box-hd">
+      <span class="box-label">Composition du Portefeuille</span>
+      <span class="box-sub">${s.composition?"Données réelles · Google Sheets":"Données simulées"}</span>
+    </div>
+    ${buildCollapsibleHoldings(s, id)}
+  </div>`;
 
   const hasReal=all.some(s=>s.ytdSeries?.isReal);
   const mainLabels=all.reduce((acc,s)=>{const l=s.ytdSeries?s.ytdSeries.dates:MOCK_YTD[s.id].dates;return l.length>=acc.length?l:acc;},[]);
