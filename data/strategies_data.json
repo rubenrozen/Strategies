@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-04-20T02:51:15Z",
+  "lastUpdated": "2026-04-20T03:01:01Z",
   "strategies": [
     {
       "fetchError": false,
       "title": "Value Underflow",
-      "benchmarkName": "S&P 500 Growth",
+      "benchmarkName": "Dow Jones Industrial Ave",
       "description": "Defensive strategy anchored in first-order structural drivers — demographics, resources, credit cycles, monetary aggregates — rather than accounting multiples, applied to overlooked corners of the market. The edge combines real-world dynamics with financial-system metrics for resilience across regimes. No fixed horizon: positions are held as long as the structural thesis holds, exited only on its deterioration.",
       "ytd": {
         "dates": [
@@ -236,13 +236,13 @@
           102.88
         ]
       },
-      "portfolioTotal": 70197.26,
+      "portfolioTotal": 70200.79,
       "metrics": {
-        "sharpe": -4.73,
+        "sharpe": -4.71,
         "sortino": -0.47,
         "sortinoTarget": 6.0,
         "perfTarget": 6.0,
-        "ttm": 0.86,
+        "ttm": 0.88,
         "volatility": 0.6,
         "varParametric": 1071.0,
         "varHistoric": 1458.0,
@@ -254,7 +254,7 @@
             "name": "Welltower",
             "currency": "$",
             "sector": "Finance",
-            "value": 3760.35
+            "value": 3760.74
           },
           {
             "name": "Aedifica",
@@ -266,49 +266,49 @@
             "name": "Visa",
             "currency": "$",
             "sector": "Finance",
-            "value": 3505.46
+            "value": 3505.83
           },
           {
             "name": "Procter & Gamble",
             "currency": "$",
             "sector": "Cons staples",
-            "value": 2374.54
+            "value": 2374.79
           },
           {
             "name": "Johnson & Johnson",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 3784.59
+            "value": 3784.99
           },
           {
             "name": "Amazon",
             "currency": "$",
             "sector": "Cons discretionary",
-            "value": 3623.06
+            "value": 3623.45
           },
           {
             "name": "United health group",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 2973.46
+            "value": 2973.77
           },
           {
             "name": "Fresenius",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 1652.7
+            "value": 1652.88
           },
           {
             "name": "Nestlé",
             "currency": "CHF",
             "sector": "Cons staples",
-            "value": 2920.32
+            "value": 2920.13
           },
           {
             "name": "Novo Nordisk",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 1482.02
+            "value": 1482.17
           },
           {
             "name": "Allianz",
@@ -320,25 +320,25 @@
             "name": "TSMC",
             "currency": "$",
             "sector": "Tech",
-            "value": 5987.66
+            "value": 5988.29
           },
           {
             "name": "Pearson",
             "currency": "£",
             "sector": "Communication",
-            "value": 2976.39
+            "value": 2976.59
           },
           {
             "name": "Grand Canyon Edu",
             "currency": "$",
             "sector": "Communication",
-            "value": 3422.02
+            "value": 3422.38
           },
           {
             "name": "Sony",
             "currency": "$",
             "sector": "Cons discretionary",
-            "value": 701.39
+            "value": 701.46
           }
         ],
         "bonds": [
@@ -400,12 +400,12 @@
       "sectors": [
         {
           "sector": "Finance",
-          "value": 14487.81,
+          "value": 14488.57,
           "pct": 24.52
         },
         {
           "sector": "Healthcare",
-          "value": 9892.77,
+          "value": 9893.81,
           "pct": 16.74
         },
         {
@@ -415,22 +415,22 @@
         },
         {
           "sector": "Communication",
-          "value": 6398.41,
+          "value": 6398.97,
           "pct": 10.83
         },
         {
           "sector": "Tech",
-          "value": 5987.66,
+          "value": 5988.29,
           "pct": 10.13
         },
         {
           "sector": "Cons staples",
-          "value": 5294.86,
+          "value": 5294.92,
           "pct": 8.96
         },
         {
           "sector": "Cons discretionary",
-          "value": 4324.45,
+          "value": 4324.91,
           "pct": 7.32
         },
         {
@@ -444,8 +444,8 @@
           "pct": 4.13
         }
       ],
-      "mwrrYtd": 19.45,
-      "ytdPct": 5.45,
+      "mwrrYtd": 19.47,
+      "ytdPct": 5.46,
       "ytdStrat": 5.5,
       "ytdBench": 2.88,
       "mwrrStrat": 19.63,
@@ -458,7 +458,7 @@
         },
         {
           "name": "Equity",
-          "value": 46385.95,
+          "value": 46389.48,
           "pct": 64.67
         },
         {
@@ -485,7 +485,7 @@
     {
       "fetchError": false,
       "title": "Trend Spotting",
-      "benchmarkName": "MSCI World",
+      "benchmarkName": "S&P 500",
       "description": "Trend-following strategy that enters once a move is confirmed by price action, flows, and a clear catalyst, but still has meaningful runway. Exits are triggered by anticipated thesis reversal — not price confirmation — to preserve the asymmetry. Capital rotates continuously into the next high-conviction setup, with holdings running 1 to 6 months. Goal: own the middle of the move, where conviction is highest and risk/reward most favourable.",
       "ytd": {
         "dates": [
@@ -717,16 +717,16 @@
           104.1
         ]
       },
-      "portfolioTotal": 84476.27,
+      "portfolioTotal": 84482.5,
       "metrics": {
-        "sharpe": 31.13,
+        "sharpe": 31.15,
         "sortino": 7.43,
         "sortinoTarget": 10.0,
         "perfTarget": 10.0,
-        "ttm": 77.99,
+        "ttm": 78.03,
         "volatility": 2.39,
         "varParametric": 4907.0,
-        "varHistoric": 2648.0,
+        "varHistoric": 2649.0,
         "varConditional": 3721.0
       },
       "composition": {
@@ -735,19 +735,19 @@
             "name": "Newmont Corp",
             "currency": "$",
             "sector": "Materials",
-            "value": 3963.7
+            "value": 3964.26
           },
           {
             "name": "Agnico Eagle",
             "currency": "$",
             "sector": "Materials",
-            "value": 4680.32
+            "value": 4680.98
           },
           {
             "name": "Wheaton Precious",
             "currency": "$",
             "sector": "Materials",
-            "value": 2592.23
+            "value": 2592.59
           },
           {
             "name": "Rheinmetall",
@@ -765,37 +765,37 @@
             "name": "Lockheed Martin",
             "currency": "$",
             "sector": "Industrial",
-            "value": 4533.34
+            "value": 4533.98
           },
           {
             "name": "Broadcom",
             "currency": "$",
             "sector": "Tech",
-            "value": 3457.95
+            "value": 3458.44
           },
           {
             "name": "Vertiv holdings",
             "currency": "$",
             "sector": "Tech",
-            "value": 5228.35
+            "value": 5229.08
           },
           {
             "name": "Microsoft",
             "currency": "$",
             "sector": "Tech",
-            "value": 1438.47
+            "value": 1438.67
           },
           {
             "name": "Crowdstrike",
             "currency": "$",
             "sector": "Tech",
-            "value": 2524.22
+            "value": 2524.58
           },
           {
             "name": "Palo Alto Network",
             "currency": "$",
             "sector": "Tech",
-            "value": 1713.24
+            "value": 1713.48
           },
           {
             "name": "Total Energies",
@@ -807,25 +807,25 @@
             "name": "Total Energies",
             "currency": "$",
             "sector": "Energy",
-            "value": 6270.52
+            "value": 6271.4
           },
           {
             "name": "Caterpillar",
             "currency": "$",
             "sector": "Industrial",
-            "value": 3379.57
+            "value": 3380.04
           },
           {
             "name": "Goldman Sachs",
             "currency": "$",
             "sector": "Finance",
-            "value": 2362.78
+            "value": 2363.12
           },
           {
             "name": "BNP Paribas",
             "currency": "$",
             "sector": "Finance",
-            "value": 2004.82
+            "value": 2005.1
           }
         ],
         "bonds": [],
@@ -847,32 +847,32 @@
       "sectors": [
         {
           "sector": "Industrial",
-          "value": 15571.46,
+          "value": 15572.57,
           "pct": 26.18
         },
         {
           "sector": "Tech",
-          "value": 14362.23,
+          "value": 14364.25,
           "pct": 24.15
         },
         {
           "sector": "Energy",
-          "value": 13936.57,
+          "value": 13937.45,
           "pct": 23.43
         },
         {
           "sector": "Materials",
-          "value": 11236.25,
+          "value": 11237.83,
           "pct": 18.89
         },
         {
           "sector": "Finance",
-          "value": 4367.6,
+          "value": 4368.22,
           "pct": 7.34
         }
       ],
-      "mwrrYtd": 132.31,
-      "ytdPct": 28.62,
+      "mwrrYtd": 132.36,
+      "ytdPct": 28.63,
       "ytdStrat": 19.14,
       "ytdBench": 4.1,
       "mwrrStrat": 79.74,
@@ -885,7 +885,7 @@
         },
         {
           "name": "Equity",
-          "value": 59474.1,
+          "value": 59480.33,
           "pct": 69.81
         },
         {
@@ -912,7 +912,7 @@
     {
       "fetchError": false,
       "title": "Next Horizon",
-      "benchmarkName": "Portfolio 60/40",
+      "benchmarkName": "NASDAQ 100",
       "description": "The strategy takes early, concentrated positions in underappreciated frontier sectors and companies, betting on interpretive depth rather than speed. Exits are triggered by consensus — not thesis breakdown — once the contrarian view becomes mainstream and the early-mover premium is captured. Best-in-class structural winners are an exception: held for years beyond consensus to compound. Horizon is 8 months to several years for the thematic core, longer for retained leaders.",
       "ytd": {
         "dates": [
