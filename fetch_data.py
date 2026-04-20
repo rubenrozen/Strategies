@@ -208,13 +208,16 @@ def extract_ytd_from_year(year_rows: list) -> dict:
     Dates in col MJ (347), portfolio in col MK (348), benchmark in col ML (349).
     Series starts at row 7 (0-based index 6). Skips empty and future dates.
     """
+    from datetime import date as date_cls
     COL_DATE = 347   # MJ
     COL_PORT = 348   # MK
     COL_BENC = 349   # ML
     START    = 6     # row 7, 0-based
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today_dt = date_cls.today()
     dates, portfolio, benchmark = [], [], []
+    skipped_future = 0
+    sample_raw = []
 
     for row_0 in range(START, len(year_rows)):
         row = year_rows[row_0]
@@ -223,9 +226,24 @@ def extract_ytd_from_year(year_rows: list) -> dict:
         raw_benc = str(row[COL_BENC]).strip() if COL_BENC < len(row) else ""
 
         if not raw_date or not raw_port: continue
+
+        # Collect raw samples for debugging
+        if len(sample_raw) < 3:
+            sample_raw.append(f"raw_date={repr(raw_date)} raw_port={repr(raw_port)}")
+
         iso_date = parse_date(raw_date)
         if iso_date is None: continue
-        if iso_date > today: continue          # skip future dates
+
+        # Compare as date objects — unambiguous regardless of string format
+        try:
+            from datetime import datetime as dt_cls
+            row_dt = dt_cls.strptime(iso_date, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if row_dt > today_dt:
+            skipped_future += 1
+            continue
+
         pf_val = parse_float(raw_port)
         bm_val = parse_float(raw_benc)
         if pf_val is None: continue
@@ -233,6 +251,12 @@ def extract_ytd_from_year(year_rows: list) -> dict:
         dates.append(iso_date)
         portfolio.append(round(pf_val, 4))
         benchmark.append(round(bm_val, 4) if bm_val is not None else None)
+
+    print(f"  YTD series: {len(dates)} points kept · {skipped_future} future dates skipped · today={today_dt}")
+    if sample_raw:
+        print(f"  Sample raw cells: {sample_raw}")
+    if dates:
+        print(f"  Date range: {dates[0]} → {dates[-1]}")
 
     return {"dates": dates, "portfolio": portfolio, "benchmark": benchmark}
 
