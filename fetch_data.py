@@ -115,9 +115,9 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
 
     # ── Portfolio library ──────────────────────────────────────────────────
     if lib_rows:
-        result["title"]           = safe_get(lib_rows, 7, "T")
-        result["benchmarkName"]   = safe_get(lib_rows, 1, "K")   # K1
-        result["description"] = safe_get(lib_rows, 8, "T")
+        result["title"]           = safe_get(lib_rows, 7, "T") or None
+        result["benchmarkName"]   = safe_get(lib_rows, 1, "K") or None   # K1 — None if empty so JS ?? fallback works
+        result["description"] = safe_get(lib_rows, 8, "T") or None
 
         # YTD series now loaded from year sheet (e.g. "2026") in main()
         result["ytd"] = {"dates": [], "portfolio": [], "benchmark": []}
