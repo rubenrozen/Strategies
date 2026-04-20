@@ -757,7 +757,6 @@ function renderOverview(){
   const all=FALLBACK.map(b=>getS(b.id));
   const el=document.getElementById("tab-overview");
   const metrics=[
-    {lbl:"YTD",    vals:all.map(s=>s.ytdStrat??s.ytdPct??s.m.ttm), fmt:f1, inv:false},
     {lbl:"TTM",    vals:all.map(s=>s.m.ttm),      fmt:f1, inv:false},
     // CAGR removed (no longer connected)
     {lbl:"Sharpe", vals:all.map(s=>s.m.sharpe),    fmt:fd, inv:false},
