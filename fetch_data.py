@@ -468,7 +468,7 @@ def main():
         data["displayName"]   = strat_cfg["display_name"]
         data["color"]         = strat_cfg["color"]
         data["tag"]           = strat_cfg["tag"]
-        data["benchmarkName"] = strat_cfg["benchmark_name"]
+        # benchmarkName already set from K1 in extract_strategy_data()
 
         output["strategies"].append(data)
         if data["fetchError"]:
