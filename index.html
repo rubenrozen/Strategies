@@ -521,36 +521,43 @@ function renderCurrencies(s){
     </table>`;
 }
 
-/* ══ Build MWRR/Target sub-metrics (vertical, below YTD number) ══ */
+/* ══ Right-column sub-metrics: Alpha + CAGR 2×2 ══ */
 function buildMwrrStrip(s){
   const mono = "font-family:var(--mono);";
-  const lbl  = mono+"font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:2px";
-  const val  = mono+"font-size:13px;font-weight:600;display:block";
+  let out = '<div style="margin-top:12px;text-align:right">';
 
-  function row(label, strVal, color){
-    return '<div style="margin-top:10px">'
-      + '<span style="'+lbl+'">'+label+'</span>'
-      + '<span style="'+val+';color:'+color+'">'+strVal+'</span>'
+  // Alpha vs benchmark (YTD) — prominent
+  if(s.ytdStrat!=null && s.ytdBench!=null){
+    const alpha = s.ytdStrat - s.ytdBench;
+    const aColor = alpha>=0 ? "var(--green)" : "var(--red)";
+    const aSign  = alpha>=0 ? "▲" : "▼";
+    out += '<div style="margin-bottom:10px">'
+      + '<div style="'+mono+'font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:2px">Alpha vs '+s.benchmarkName+'</div>'
+      + '<div style="'+mono+'font-size:20px;font-weight:600;color:'+aColor+'">'+aSign+' '+f1(alpha)+'</div>'
       + '</div>';
   }
 
-  let out = '<div style="margin-top:14px;text-align:right">';
+  // CAGR 2×2 grid
+  if(s.mwrrStrat!=null || s.mwrrBench!=null){
+    const cell = (lbl, val, color) =>
+      '<div style="text-align:right">'
+      + '<div style="'+mono+'font-size:8px;letter-spacing:.10em;text-transform:uppercase;color:var(--dim);margin-bottom:2px">'+lbl+'</div>'
+      + '<div style="'+mono+'font-size:13px;font-weight:600;color:'+color+'">'+f1(val)+'</div>'
+      + '</div>';
 
-  if(s.perfTarget != null)
-    out += row("Perf. Target", f1(s.perfTarget), "var(--muted)");
-
-  if(s.mwrrStrat != null){
-    out += row("MWRR Stratégie", f1(s.mwrrStrat), s.mwrrStrat>=0?s.color:"var(--red)");
-    out += row("MWRR "+s.benchmarkName, f1(s.mwrrBench), "var(--muted)");
-    if(s.mwrrBench != null){
-      const alpha = s.mwrrStrat - s.mwrrBench;
-      out += row("Alpha MWRR", f1(alpha), alpha>=0?"var(--green)":"var(--red)");
+    out += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;border-top:1px solid var(--border);padding-top:10px">';
+    out += cell("CAGR Stratégie",   s.mwrrStrat, s.mwrrStrat!=null&&s.mwrrStrat>=0?s.color:"var(--red)");
+    out += cell("CAGR "+s.benchmarkName, s.mwrrBench, "var(--muted)");
+    if(s.mwrrStrat!=null && s.mwrrBench!=null){
+      const cAlpha = s.mwrrStrat - s.mwrrBench;
+      out += cell("Alpha CAGR", cAlpha, cAlpha>=0?"var(--green)":"var(--red)");
     }
-    out += '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:8px;line-height:1.5">CAGR extrapolated from<br>YTD performances</div>';
+    out += '<div style="text-align:right;align-self:end"><div style="'+mono+'font-size:7px;color:var(--dim);line-height:1.5">CAGR extrapolated from<br>YTD performances</div></div>';
+    out += '</div>';
   }
 
   out += '</div>';
-  return (s.perfTarget!=null || s.mwrrStrat!=null) ? out : '';
+  return (s.ytdStrat!=null || s.mwrrStrat!=null || s.perfTarget!=null) ? out : '';
 }
 
 /* ══ Render strategy tab ══ */
@@ -611,21 +618,7 @@ function renderStratTab(id){
         <div class="leg-item"><div class="leg-dash" style="border-color:${s.color}66"></div>${s.benchmarkName}</div>
       </div>
     </div>
-    <div style="padding:14px 22px">
-      <div class="box-label" style="margin-bottom:10px">MWRR · CAGR YTD <span style="color:var(--dim);font-size:8px;margin-left:6px">Feuille ${new Date().getFullYear()}</span></div>
-      <div style="display:flex;gap:12px">
-        <div class="mc" style="flex:1;margin:0">
-          <div class="mc-lbl">MWRR / CAGR YTD</div>
-          <div class="mc-val ${pCls(s.mwrrYtd)}" style="color:${(s.mwrrYtd??0)>=0?s.color:'var(--red)'};font-size:28px">${f1(s.mwrrYtd)}</div>
-          <div class="mc-sub">Money-Weighted Return ajusté · année en cours</div>
-        </div>
-        <div class="mc" style="flex:1;margin:0">
-          <div class="mc-lbl">Alpha vs ${s.benchmarkName}</div>
-          <div class="mc-val ${pCls(s.mwrrYtd!=null&&bPctDisplay!=null?s.mwrrYtd-bPctDisplay:null)}" style="font-size:28px">${s.mwrrYtd!=null&&bPctDisplay!=null?f1(s.mwrrYtd-bPctDisplay):"—"}</div>
-          <div class="mc-sub">MWRR YTD vs performance benchmark</div>
-        </div>
-      </div>
-    </div>
+
   </div>
   <div class="g2">
     <div class="box"><div class="box-hd"><span class="box-label">Allocation Sectorielle</span><span class="box-sub">${s.sectors?"Données réelles":"Données simulées"}</span></div><div class="box-body"><div class="ch ch-md"><canvas id="sec-${id}"></canvas></div><div class="legend" id="sec-legend-${id}" style="margin-top:10px"></div></div></div>
