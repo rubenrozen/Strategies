@@ -531,36 +531,36 @@ function buildMwrrStrip(s){
   const mono = "font-family:var(--mono);";
   let out = "";
 
-  // Benchmark YTD (non-adjusted) — small, right below the big YTD
+  // Benchmark YTD — immediately under strategy YTD, no separator
   if(s.ytdBench != null){
     const bColor = s.ytdBench>=0 ? "var(--muted)" : "var(--red)";
-    out += '<div style="margin-top:6px;text-align:right">'
-      + '<span style="'+mono+'font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">'
-      + s.benchmarkName+'&nbsp;&nbsp;</span>'
-      + '<span style="'+mono+'font-size:16px;font-weight:600;color:'+bColor+'">'+(s.ytdBench>=0?"+":"")+s.ytdBench.toFixed(1)+'%</span>'
+    out += '<div style="margin-top:4px;text-align:right">'
+      + '<span style="'+mono+'font-size:9px;color:var(--dim)">'+(s.benchmarkName||"")+'&nbsp;&nbsp;</span>'
+      + '<span style="'+mono+'font-size:15px;font-weight:600;color:'+bColor+'">'+(s.ytdBench>=0?"+":"")+s.ytdBench.toFixed(1)+'%</span>'
       + '</div>';
   }
 
-  // 2x2 CAGR grid
+  // 2x2 CAGR grid — inline-block so it hugs its content, right-aligned
   const hasGrid = s.perfTarget!=null || s.mwrrStrat!=null || s.mwrrBench!=null;
   if(hasGrid){
     const cell = (lbl, val, color) =>
-      '<div style="text-align:right">'
+      '<div style="padding:4px 10px;text-align:right">'
       + '<div style="'+mono+'font-size:7px;letter-spacing:.10em;text-transform:uppercase;color:var(--dim);margin-bottom:2px">'+lbl+'</div>'
       + '<div style="'+mono+'font-size:13px;font-weight:600;color:'+color+'">'
-      + (val!=null ? (val>=0?"+":"")+val.toFixed(1)+"%" : "\u2014")
+      + (val!=null ? (val>=0?"+":"")+val.toFixed(1)+"%" : "—")
       + '</div></div>';
 
     const cAlpha = (s.mwrrStrat!=null && s.mwrrBench!=null) ? s.mwrrStrat - s.mwrrBench : null;
 
-    out += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;'
-      + 'margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">'
-      + cell("Perf. Target",         s.perfTarget, "var(--muted)")
-      + cell("CAGR Stratégie",       s.mwrrStrat,  s.mwrrStrat!=null&&s.mwrrStrat>=0?s.color:"var(--red)")
-      + cell("CAGR "+s.benchmarkName,s.mwrrBench,  "var(--muted)")
-      + cell("Alpha CAGR",           cAlpha,        cAlpha!=null?(cAlpha>=0?"var(--green)":"var(--red)"):"var(--dim)")
+    // Inline-block container so grid is only as wide as its content
+    out += '<div style="display:inline-grid;grid-template-columns:auto auto;'
+      + 'margin-top:10px;border-top:1px solid var(--border);padding-top:8px">'
+      + cell("Perf. Target",          s.perfTarget, "var(--muted)")
+      + cell("CAGR Strat.",           s.mwrrStrat,  s.mwrrStrat!=null&&s.mwrrStrat>=0?s.color:"var(--red)")
+      + cell("CAGR "+s.benchmarkName, s.mwrrBench,  "var(--muted)")
+      + cell("Alpha CAGR",            cAlpha,        cAlpha!=null?(cAlpha>=0?"var(--green)":"var(--red)"):"var(--dim)")
       + '</div>'
-      + '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:6px;text-align:right;line-height:1.5">'
+      + '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:4px;text-align:right;line-height:1.5">'
       + 'CAGR extrapolated from YTD performances</div>';
   }
 
