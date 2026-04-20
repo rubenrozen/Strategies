@@ -230,48 +230,6 @@ const FALLBACK=[
   {id:"trendspotting",   displayName:"Trend Spotting",   color:"#e8a020",tag:"Momentum · Systématique · Multi-Asset",         benchmarkName:"MSCI World",      title:"Trend Spotting",   description:"Stratégie quantitative suivant les tendances de marché avec un système de scoring multi-facteurs. Rotation sectorielle dynamique."},
   {id:"nexthorizon",displayName:"Next Horizon",color:"#1fcfa8",tag:"Capital Preservation · Faible Volatilité",       benchmarkName:"Portfolio 60/40", title:"Next Horizon",description:"Portefeuille orienté préservation du capital avec exposition privilégiée aux secteurs défensifs, obligations IG et actifs réels."},
 ];
-const MOCK_M={
-  valueunderflow:  {sharpe:1.38,sortino:1.82,sortinoTarget:8.0,ttm:34.2,volatility:24.8,varParametric:-3.2,varHistoric:-3.7,varConditional:-5.1},
-  trendspotting:   {sharpe:1.74,sortino:2.18,sortinoTarget:6.0,ttm:19.8,volatility:14.2,varParametric:-1.8,varHistoric:-2.1,varConditional:-3.0},
-  nexthorizon:{sharpe:1.42,sortino:1.94,sortinoTarget:5.0,ttm:9.2, volatility:6.8, varParametric:-0.8,varHistoric:-0.9,varConditional:-1.4},
-};
-const MOCK_YTD={
-  valueunderflow:  {dates:["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"],portfolio:[100,96.4,101.2,104.8,99.6,107.3,113.8,110.2,118.6,122.4,119.1,118.4],benchmark:[100,98.1,100.6,102.4,100.2,103.8,107.1,105.4,109.2,112,110.6,108.9]},
-  trendspotting:   {dates:["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"],portfolio:[100,101.2,102.8,101.4,103.6,106.2,105.4,108.1,109.6,108.2,111.4,111.2],benchmark:[100,100.4,101.2,100.8,101.8,103.4,102.6,104.8,106,105.2,107.4,107.2]},
-  nexthorizon:{dates:["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"],portfolio:[100,100.6,101.4,100.8,101.6,102.4,102.1,103.2,103.8,103.4,104.4,104.8],benchmark:[100,100.3,100.8,100.4,101,101.8,101.4,102.3,102.8,102.4,103.4,104.1]},
-};
-const MOCK_EXTRA={
-  valueunderflow:  {mwrr:16.8,cagr:22.4,bMwrr:12.8,bCagr:14.2,cagrIdx:[100,138.2,194.6,152.8,198.4,234.7],bCagrIdx:[100,128.4,162.8,134.6,168.2,196.8]},
-  trendspotting:   {mwrr:10.4,cagr:16.8,bMwrr:10.1,bCagr:11.4,cagrIdx:[100,118.6,148.4,126.2,162.8,191.4],bCagrIdx:[100,112.4,136.8,118.6,148.2,172.6]},
-  nexthorizon:{mwrr:4.6, cagr:9.2, bMwrr:7.4, bCagr:7.8, cagrIdx:[100,108.4,118.6,110.2,122.8,134.4],bCagrIdx:[100,106.2,114.8,108,118.4,128.6]},
-};
-const MOCK_SEC={
-  valueunderflow:  [{n:"Technologie",v:42},{n:"Santé",v:18},{n:"Conso. Discr.",v:15},{n:"Communication",v:12},{n:"Finance",v:8},{n:"Autres",v:5}],
-  trendspotting:   [{n:"Technologie",v:28},{n:"Finance",v:22},{n:"Industrie",v:18},{n:"Énergie",v:14},{n:"Matériaux",v:10},{n:"Autres",v:8}],
-  nexthorizon:[{n:"Santé",v:26},{n:"Utilities",v:22},{n:"Conso. Courante",v:20},{n:"Immobilier",v:16},{n:"Finance",v:10},{n:"Autres",v:6}],
-};
-const MOCK_CUR={
-  valueunderflow:  [{n:"USD",v:68},{n:"EUR",v:12},{n:"JPY",v:6},{n:"GBP",v:7},{n:"Autres",v:7}],
-  trendspotting:   [{n:"USD",v:44},{n:"EUR",v:24},{n:"JPY",v:12},{n:"GBP",v:10},{n:"CHF",v:10}],
-  nexthorizon:[{n:"USD",v:72},{n:"EUR",v:14},{n:"GBP",v:8},{n:"CHF",v:4},{n:"Autres",v:2}],
-};
-const MOCK_HOLD={
-  valueunderflow:[
-    {sector:"Technologie",items:[{t:"NVDA",n:"NVIDIA Corp.",wt:12.4,ytd:52.3},{t:"MSFT",n:"Microsoft Corp.",wt:9.2,ytd:18.4},{t:"CRWD",n:"CrowdStrike",wt:7.1,ytd:28.9}]},
-    {sector:"Santé",      items:[{t:"ISRG",n:"Intuitive Surgical",wt:6.4,ytd:22.1},{t:"DXCM",n:"Dexcom Inc.",wt:4.2,ytd:-8.3}]},
-    {sector:"Conso. D.",  items:[{t:"TSLA",n:"Tesla Inc.",wt:8.2,ytd:-12.4},{t:"ABNB",n:"Airbnb Inc.",wt:3.8,ytd:9.7}]},
-  ],
-  trendspotting:[
-    {sector:"Finance",  items:[{t:"JPM",n:"JPMorgan Chase",wt:8.9,ytd:14.2},{t:"GS",n:"Goldman Sachs",wt:5.4,ytd:18.6}]},
-    {sector:"Industrie",items:[{t:"CAT",n:"Caterpillar Inc.",wt:6.8,ytd:22.1},{t:"HON",n:"Honeywell Intl.",wt:5.2,ytd:8.4}]},
-    {sector:"Énergie",  items:[{t:"XOM",n:"Exxon Mobil",wt:7.4,ytd:8.6},{t:"CVX",n:"Chevron Corp.",wt:4.6,ytd:5.2}]},
-  ],
-  nexthorizon:[
-    {sector:"Santé",          items:[{t:"JNJ",n:"Johnson & Johnson",wt:9.2,ytd:6.4},{t:"ABT",n:"Abbott Laboratories",wt:5.8,ytd:4.2}]},
-    {sector:"Utilities",      items:[{t:"NEE",n:"NextEra Energy",wt:7.4,ytd:2.1},{t:"SO",n:"Southern Company",wt:5.1,ytd:3.8}]},
-    {sector:"Conso. Courante",items:[{t:"PG",n:"Procter & Gamble",wt:8.1,ytd:4.8},{t:"KO",n:"Coca-Cola Co.",wt:5.6,ytd:3.2}]},
-  ],
-};
 const PAL_S=["#4e94f7","#e8a020","#1fcfa8","#a78bfa","#f87171","#fb923c"];
 const PAL_C=["#4e94f7","#e8a020","#1fcfa8","#a78bfa","#f87171"];
 
@@ -317,8 +275,8 @@ async function loadData(){
     rendered={};
     renderTab(currentTab);
   }catch(e){
-    lbl.textContent="Données simulées · Renseigner sheets_config.json";
-    lbl.style.color="var(--c1)";
+    lbl.textContent="Données non disponibles · Vérifier le workflow GitHub";
+    lbl.style.color="var(--red)";
     dot.classList.add("dot-stale");
     renderTab(currentTab);
   }
@@ -329,8 +287,7 @@ function getS(id){
   const base=FALLBACK.find(s=>s.id===id)||{};
   const live=LIVE?.strategies?.find(s=>s.id===id)||{};
   const lm=live.metrics||{};
-  const bm=MOCK_M[id]||{};
-  // Build YTD series
+  // Build YTD series from live data only
   let ytdSeries=null;
   if(live.ytd&&live.ytd.dates&&live.ytd.dates.length>0){
     const dates=[],portfolio=[],benchmark=[];
@@ -340,42 +297,37 @@ function getS(id){
     });
     if(dates.length>0) ytdSeries={dates,portfolio,benchmark,isReal:true};
   }
-  const ex=MOCK_EXTRA[id]||{};
   return{
-    id,color:live.color||base.color,
-    displayName:live.displayName||base.displayName,
-    tag:live.tag||base.tag,
-    benchmarkName:live.benchmarkName||base.benchmarkName,
-    title:live.title||base.title||base.displayName,
-    description:live.description||base.description,
+    id,
+    color:         live.color         ?? base.color,
+    displayName:   live.displayName   ?? base.displayName,
+    tag:           live.tag           ?? base.tag,
+    benchmarkName: live.benchmarkName ?? base.benchmarkName,
+    title:         live.title         ?? base.title ?? base.displayName,
+    description:   live.description   ?? base.description,
     ytdSeries,
     m:{
-      sharpe:     lm.sharpe    ??bm.sharpe,
-      sortino:    lm.sortino   ??bm.sortino,
-      sortinoTarget:lm.sortinoTarget??bm.sortinoTarget,
-      ttm:        lm.ttm       ??bm.ttm,
-      volatility: lm.volatility??bm.volatility,
-      varParametric: lm.varParametric ??bm.varParametric,
-      varHistoric:   lm.varHistoric   ??bm.varHistoric,
-      varConditional:lm.varConditional??bm.varConditional,
+      sharpe:         lm.sharpe         ?? null,
+      sortino:        lm.sortino        ?? null,
+      sortinoTarget:  lm.sortinoTarget  ?? null,
+      ttm:            lm.ttm            ?? null,
+      volatility:     lm.volatility     ?? null,
+      varParametric:  lm.varParametric  ?? null,
+      varHistoric:    lm.varHistoric    ?? null,
+      varConditional: lm.varConditional ?? null,
     },
-    ...ex,
-    sectors:    MOCK_SEC[id]||[],
-    currencies: MOCK_CUR[id]||[],
-    portfolioTotal: live.portfolioTotal || null,
-    composition:   live.composition || null,
-    currencies:    live.currencies  || null,
-    sectors:       live.sectors     || null,   // null = show mock donut
-    assetClasses:  live.assetClasses|| null,
-    mwrrYtd:       live.mwrrYtd     ?? null,
-    ytdPct:        live.ytdPct      ?? null,   // E17 year sheet
-    ytdStrat:      live.ytdStrat    ?? null,   // MP11
-    ytdBench:      live.ytdBench    ?? null,   // MP7
-    mwrrStrat:     live.mwrrStrat   ?? null,   // MO11
-    mwrrBench:     live.mwrrBench   ?? null,   // MO7
-    perfTarget:    live.metrics?.perfTarget ?? null,  // Portfolio!F6
-    benchmarkName: live.benchmarkName || base.benchmarkName,
-    holdings:      MOCK_HOLD[id]||[],
+    portfolioTotal: live.portfolioTotal ?? null,
+    composition:    live.composition   ?? null,
+    currencies:     live.currencies    ?? null,
+    sectors:        live.sectors       ?? null,
+    assetClasses:   live.assetClasses  ?? null,
+    mwrrYtd:        live.mwrrYtd       ?? null,
+    ytdPct:         live.ytdPct        ?? null,
+    ytdStrat:       live.ytdStrat      ?? null,
+    ytdBench:       live.ytdBench      ?? null,
+    mwrrStrat:      live.mwrrStrat     ?? null,
+    mwrrBench:      live.mwrrBench     ?? null,
+    perfTarget:     live.metrics?.perfTarget ?? null,
   };
 }
 
@@ -387,30 +339,11 @@ function fmtQty(v){if(v==null)return"—";return v%1===0?v.toLocaleString("fr-FR
 function renderComposition(s, id){
   const comp = s.composition;
 
-  // ── MOCK fallback (no live data yet) ──
+  // No live comp data
   const hasLiveComp = comp && ["equities","bonds","crypto","futures"].some(k=>(comp[k]||[]).length>0);
-  if(!hasLiveComp){
-    const wmax=Math.max(...s.holdings.flatMap(g=>g.items).map(h=>h.wt));
-    return s.holdings.map(g=>`
-      <div class="comp-section">
-        <div class="comp-section-hd">
-          <div class="comp-section-icon" style="background:${s.color}"></div>
-          <span class="comp-section-title">${g.sector}</span>
-        </div>
-        <table class="comp-table">
-          <thead><tr><th>Actif</th><th>Poids</th><th style="text-align:right">Perf. YTD</th></tr></thead>
-          <tbody>${g.items.map(h=>`
-            <tr>
-              <td><strong>${h.t}</strong> <span class="dim">${h.n}</span></td>
-              <td>${h.wt.toFixed(1)}%</td>
-              <td class="${pCls(h.ytd)}">${f1(h.ytd)}</td>
-            </tr>`).join("")}
-          </tbody>
-        </table>
-      </div>`).join("");
-  }
+  if(!hasLiveComp) return '<div style="padding:18px;font-family:var(--mono);font-size:10px;color:var(--muted)">Données non disponibles</div>';
 
-  // ── LIVE data ──
+    // ── LIVE data ──
   const CATS = [
     {
       key:"equities", label:"Equities", color:"#4e94f7",
@@ -524,18 +457,8 @@ function renderCurrencies(s){
       }).join("")
       +'</tbody></table>';
   }
-  // Mock fallback
-  const PAL=["#4e94f7","#e8a020","#1fcfa8","#a78bfa","#f87171"];
-  return '<div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:10px;letter-spacing:.08em;text-transform:uppercase">Données simulées</div>'
-    +'<table style="width:100%;border-collapse:collapse"><thead><tr>'
-    +'<th style="font-family:var(--mono);font-size:8px;color:var(--muted);text-align:left;padding-bottom:8px">Devise</th>'
-    +'<th style="font-family:var(--mono);font-size:8px;color:var(--muted);text-align:right;padding-bottom:8px">Exposition</th>'
-    +'</tr></thead><tbody>'
-    +s.currencies.map((x,i)=>'<tr><td style="padding:6px 0">'
-      +'<span style="font-size:16px;margin-right:8px">'+(CURRENCY_META[x.n]?.flag||"💱")+'</span>'
-      +'<span style="font-family:var(--mono);font-size:10px;font-weight:600;color:'+(CURRENCY_META[x.n]?.color||PAL[i]||"#666")+'">'+x.n+'</span>'
-      +'</td><td style="text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted)">'+x.v+'%</td></tr>').join("")
-    +'</tbody></table>';
+  // No live currency data
+  return '<div style="padding:18px;font-family:var(--mono);font-size:10px;color:var(--muted)">Données non disponibles</div>';
 }
 
 /* ══ Right-column sub-metrics: bench YTD + 2x2 CAGR grid ══ */
@@ -702,15 +625,15 @@ function renderStratTab(id){
   const s=getS(id);
   const m=s.m;
   const ytd=s.ytdSeries;
-  const lbl=ytd?ytd.dates:MOCK_YTD[id].dates;
-  const port=ytd?ytd.portfolio:MOCK_YTD[id].portfolio;
-  const benc=ytd?ytd.benchmark:MOCK_YTD[id].benchmark;
-  const isReal=!!(ytd&&ytd.isReal);
-  // YTD % — prefer MP11 (displayed value), fallback to E17, fallback to series
+  const lbl  = ytd ? ytd.dates     : [];
+  const port = ytd ? ytd.portfolio : [];
+  const benc = ytd ? ytd.benchmark : [];
+  const isReal = !!(ytd && ytd.isReal);
+  // YTD % — prefer MP11, fallback E17, fallback computed from series
   const ytdPctSeries = port.length>1 ? ((port.at(-1)/port[0]-1)*100) : null;
-  const ytdPct  = s.ytdStrat ?? s.ytdPct ?? ytdPctSeries;
-  const bPctDisplay = s.ytdBench ?? bPct;   // MP7 for benchmark display
-  const bPct=(benc&&benc.at(-1)!=null&&port.length>1)?((benc.at(-1)/100-1)*100):null;
+  const ytdPct       = s.ytdStrat ?? s.ytdPct ?? ytdPctSeries;
+  const bPct         = (benc&&benc.at(-1)!=null&&port.length>1) ? ((benc.at(-1)/100-1)*100) : null;
+  const bPctDisplay  = s.ytdBench ?? bPct;
 
   // Pre-compute conditional HTML snippets (avoids nested backtick issues)
   const _alphaYtd = (ytdPct!=null&&bPctDisplay!=null)
@@ -777,6 +700,13 @@ function renderStratTab(id){
       </div>
     </div>
   </div>
+  <div class="box" id="holdings-box-${id}">
+    <div class="box-hd">
+      <span class="box-label">Composition du Portefeuille</span>
+      <span class="box-sub">${s.composition?"Données réelles":"—"}</span>
+    </div>
+    ${buildCollapsibleHoldings(s, id)}
+  </div>
 </div>`;
 
   mkChart("ytd-"+id,{type:"line",data:{labels:lbl,datasets:[
@@ -784,20 +714,15 @@ function renderStratTab(id){
     {label:s.benchmarkName,data:benc,borderColor:s.color+"66", backgroundColor:"transparent",borderWidth:1.5,tension:.35,pointRadius:0,pointHoverRadius:3,fill:false,spanGaps:true,borderDash:[5,5]},
   ]},options:lineOpts(isReal)});
   // CAGR inception chart removed
-  // Sector donut — live or mock
-  {
-    const liveSec  = s.sectors && s.sectors.length;
-    const rawSecLabels = liveSec ? s.sectors.map(x=>x.sector) : MOCK_SEC[id].map(x=>x.n);
-    const rawSecVals   = liveSec ? s.sectors.map(x=>x.pct)    : MOCK_SEC[id].map(x=>x.v);
-    // Filter out zero/null entries
-    const secFiltered  = rawSecLabels.map((l,i)=>({l,v:rawSecVals[i]})).filter(x=>x.v&&x.v>0);
-    const secLabels    = secFiltered.map(x=>x.l);
-    const secVals      = secFiltered.map(x=>x.v);
+  // Sector donut — live data only, skip if empty
+  if(s.sectors && s.sectors.length){
+    const secFiltered = s.sectors.filter(x=>x.pct&&x.pct>0);
+    const secLabels   = secFiltered.map(x=>x.sector);
+    const secVals     = secFiltered.map(x=>x.pct);
     mkChart("sec-"+id,{type:"doughnut",data:{labels:secLabels,datasets:[{data:secVals,backgroundColor:PAL_S,borderColor:"#080a10",borderWidth:2,hoverOffset:6}]},options:dnutOpts()});
-    // Build legend
     const secLegEl = document.getElementById("sec-legend-"+id);
     if(secLegEl) secLegEl.innerHTML = secLabels.map((lbl,i)=>
-      `<div class="leg-item"><div style="width:8px;height:8px;border-radius:2px;background:${PAL_S[i]||'#666'};flex-shrink:0"></div>${lbl} — ${secVals[i]!=null?secVals[i].toFixed(1)+"%":"—"}</div>`
+      `<div class="leg-item"><div style="width:8px;height:8px;border-radius:2px;background:${PAL_S[i]||'#666'};flex-shrink:0"></div>${lbl} — ${secVals[i].toFixed(1)}%</div>`
     ).join("");
   }
   // Asset class donut
@@ -843,10 +768,9 @@ function renderOverview(){
       return liveCorr.values[si][ti];
     }));
   } else {
-    // Mock fallback
-    corr = [[1.00,0.72,0.31],[0.72,1.00,0.48],[0.31,0.48,1.00]];
+    corr = null;  // No fallback — show — when correlation data unavailable
   }
-  const corrBg=(v,i,j)=>{if(i===j)return"rgba(255,255,255,.03)";const t=(v-.25)/.75;return`rgba(${Math.round(t*60)},${Math.round(t*100)},${Math.round(t*240)},${(.1+t*.25).toFixed(2)})`;};
+  const corrBg=(v,i,j)=>{if(i===j)return"rgba(255,255,255,.03)";if(v==null)return"rgba(255,255,255,.02)";const t=(v-.25)/.75;return`rgba(${Math.round(t*60)},${Math.round(t*100)},${Math.round(t*240)},${(.1+t*.25).toFixed(2)})`;};
 
   el.innerHTML=`<div class="gap14">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0 8px">
@@ -876,30 +800,24 @@ function renderOverview(){
     </div></div>
   </div>
   <div class="box"><div class="box-hd"><span class="box-label">Matrice de Corrélation · Stratégies</span><span class="box-sub">${liveCorr?"Données réelles · Strategies correlation matrices":"Données simulées"}</span></div>
-    <div class="box-body"><div style="display:grid;grid-template-columns:140px repeat(3,1fr);gap:2px;max-width:600px"><div style="background:var(--bg2);border-radius:var(--rs) 0 0 0;padding:12px"></div>${all.map(s=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500;text-align:center">${s.displayName}</div>`).join("")}${all.map((s,i)=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500">${s.displayName}</div>${all.map((_,j)=>`<div style="padding:12px;background:${corrBg(corr[i][j],i,j)};text-align:center;font-family:var(--mono);font-size:13px;font-weight:${i===j?400:500};color:${i===j?'var(--muted)':'var(--text)'}">${corr[i][j]!=null?corr[i][j].toFixed(2):'—'}</div>`).join("")}`).join("")}</div></div>
+    <div class="box-body"><div style="display:grid;grid-template-columns:140px repeat(3,1fr);gap:2px;max-width:600px"><div style="background:var(--bg2);border-radius:var(--rs) 0 0 0;padding:12px"></div>${all.map(s=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500;text-align:center">${s.displayName}</div>`).join("")}${all.map((s,i)=>`<div style="background:var(--bg2);padding:12px;font-family:var(--mono);font-size:10px;color:${s.color};font-weight:500">${s.displayName}</div>${all.map((_,j)=>`<div style="padding:12px;background:${corrBg(corr[i][j],i,j)};text-align:center;font-family:var(--mono);font-size:13px;font-weight:${i===j?400:500};color:${i===j?'var(--muted)':'var(--text)'}">${corr&&corr[i][j]!=null?corr[i][j].toFixed(2):'—'}</div>`).join("")}`).join("")}</div></div>
   </div>
-</div>
-  <div class="box" id="holdings-box-${id}">
-    <div class="box-hd">
-      <span class="box-label">Composition du Portefeuille</span>
-      <span class="box-sub">${s.composition?"Données réelles · Google Sheets":"Données simulées"}</span>
-    </div>
-    ${buildCollapsibleHoldings(s, id)}
-  </div>`;
+</div>`;
+  // Holdings rendered per strategy tab, not here
 
   const hasReal=all.some(s=>s.ytdSeries?.isReal);
-  const mainLabels=all.reduce((acc,s)=>{const l=s.ytdSeries?s.ytdSeries.dates:MOCK_YTD[s.id].dates;return l.length>=acc.length?l:acc;},[]);
+  const mainLabels=all.reduce((acc,s)=>{const l=s.ytdSeries?s.ytdSeries.dates:[];return l.length>=acc.length?l:acc;},[]);
   const ds=[];
   all.forEach(s=>{
-    const P=s.ytdSeries?s.ytdSeries.portfolio:MOCK_YTD[s.id].portfolio;
-    const B=s.ytdSeries?s.ytdSeries.benchmark:MOCK_YTD[s.id].benchmark;
+    const P=s.ytdSeries?s.ytdSeries.portfolio:[];
+    const B=s.ytdSeries?s.ytdSeries.benchmark:[];
     ds.push({label:s.displayName,  data:P,borderColor:s.color,      backgroundColor:"transparent",borderWidth:2.5,tension:.35,pointRadius:0,pointHoverRadius:5,fill:false,spanGaps:true});
     ds.push({label:s.benchmarkName,data:B,borderColor:s.color+"55", backgroundColor:"transparent",borderWidth:1.5,tension:.35,pointRadius:0,fill:false,spanGaps:true,borderDash:[5,4]});
   });
   mkChart("ov-main",{type:"line",data:{labels:mainLabels,datasets:ds},options:lineOpts(hasReal)});
   const rLbl=["YTD","TTM","CAGR","Sharpe","Sortino","Stabilité","CVaR protect."];
   function nrm(arr,inv=false){const v=arr.filter(x=>x!=null);if(!v.length)return arr.map(()=>50);const mn=Math.min(...v),mx=Math.max(...v);if(mx===mn)return arr.map(()=>50);return arr.map(x=>x==null?0:inv?(1-(x-mn)/(mx-mn))*100:(x-mn)/(mx-mn)*100);}
-  const rDims=[all.map(s=>s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):s.m.ttm),all.map(s=>s.m.ttm),all.map(s=>s.cagr),all.map(s=>s.m.sharpe),all.map(s=>s.m.sortino),all.map(s=>s.m.volatility),all.map(s=>s.m.varConditional!=null?Math.abs(s.m.varConditional):null)];
+  const rDims=[all.map(s=>s.ytdStrat??s.ytdPct??(s.ytdSeries?((s.ytdSeries.portfolio.at(-1)/s.ytdSeries.portfolio[0]-1)*100):null)),all.map(s=>s.m.ttm),all.map(s=>s.mwrrStrat),all.map(s=>s.m.sharpe),all.map(s=>s.m.sortino),all.map(s=>s.m.volatility),all.map(s=>s.m.varConditional!=null?Math.abs(s.m.varConditional):null)];
   const normDims=rDims.map((dim,i)=>nrm(dim,i>=5));
   mkChart("ov-radar",{type:"radar",data:{labels:rLbl,datasets:all.map((s,i)=>({label:s.displayName,data:rLbl.map((_,d)=>normDims[d][i]),borderColor:s.color,backgroundColor:s.color+"22",borderWidth:2,pointBackgroundColor:s.color,pointRadius:3,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT}},scales:{r:{grid:{color:"rgba(255,255,255,.07)"},angleLines:{color:"rgba(255,255,255,.06)"},ticks:{display:false,stepSize:25},min:0,max:100,pointLabels:{font:{family:"'IBM Plex Mono'",size:9},color:"#4e5d78"}}}}});
 }
