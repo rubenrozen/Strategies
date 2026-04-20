@@ -338,8 +338,8 @@ function getS(id){
     displayName:live.displayName||base.displayName,
     tag:live.tag||base.tag,
     benchmarkName:live.benchmarkName||base.benchmarkName,
-    title:live.title||base.title||base.displayName,
-    description:live.description||base.description,
+    title:live.title??base.title??base.displayName,
+    description:live.description??base.description,
     ytdSeries,
     m:{
       sharpe:     lm.sharpe    ??bm.sharpe,
@@ -366,7 +366,7 @@ function getS(id){
     mwrrStrat:     live.mwrrStrat   ?? null,   // MO11
     mwrrBench:     live.mwrrBench   ?? null,   // MO7
     perfTarget:    live.metrics?.perfTarget ?? null,  // Portfolio!F6
-    benchmarkName: live.benchmarkName || base.benchmarkName,
+    benchmarkName: live.benchmarkName ?? base.benchmarkName,
     holdings:      MOCK_HOLD[id]||[],
   };
 }
@@ -546,7 +546,7 @@ function buildMwrrStrip(s){
       const alpha = s.mwrrStrat - s.mwrrBench;
       out += row("Alpha MWRR", f1(alpha), alpha>=0?"var(--green)":"var(--red)");
     }
-    out += '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:8px;line-height:1.5">Adjusted Money-Weighted<br>Return · YTD</div>';
+    out += '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:8px;line-height:1.5">CAGR extrapolated from<br>YTD performances</div>';
   }
 
   out += '</div>';
