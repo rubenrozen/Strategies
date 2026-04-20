@@ -526,41 +526,47 @@ function renderCurrencies(s){
     +'</tbody></table>';
 }
 
-/* ══ Build MWRR/Target sub-header strip (avoids nested template literal issues) ══ */
+/* ══ Right-column sub-metrics: bench YTD + 2x2 CAGR grid ══ */
 function buildMwrrStrip(s){
-  const mono = "font-family:var(--mono);font-size:";
-  const lbl  = mono+"8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)";
-  const sep  = '<div style="width:1px;height:28px;background:var(--border);flex-shrink:0"></div>';
+  const mono = "font-family:var(--mono);";
+  let out = "";
 
-  function cell(label, val, color){
-    return '<div style="display:flex;flex-direction:column;gap:2px">'
-      + '<span style="'+lbl+'">'+label+'</span>'
-      + '<span style="'+mono+'15px;font-weight:600;color:'+color+'">'+val+'</span>'
+  // Benchmark YTD (non-adjusted) — small, right below the big YTD
+  if(s.ytdBench != null){
+    const bColor = s.ytdBench>=0 ? "var(--muted)" : "var(--red)";
+    out += '<div style="margin-top:6px;text-align:right">'
+      + '<span style="'+mono+'font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">'
+      + s.benchmarkName+'&nbsp;&nbsp;</span>'
+      + '<span style="'+mono+'font-size:16px;font-weight:600;color:'+bColor+'">'+(s.ytdBench>=0?"+":"")+s.ytdBench.toFixed(1)+'%</span>'
       + '</div>';
   }
 
-  let parts = [];
+  // 2x2 CAGR grid
+  const hasGrid = s.perfTarget!=null || s.mwrrStrat!=null || s.mwrrBench!=null;
+  if(hasGrid){
+    const cell = (lbl, val, color) =>
+      '<div style="text-align:right">'
+      + '<div style="'+mono+'font-size:7px;letter-spacing:.10em;text-transform:uppercase;color:var(--dim);margin-bottom:2px">'+lbl+'</div>'
+      + '<div style="'+mono+'font-size:13px;font-weight:600;color:'+color+'">'
+      + (val!=null ? (val>=0?"+":"")+val.toFixed(1)+"%" : "\u2014")
+      + '</div></div>';
 
-  if(s.perfTarget != null)
-    parts.push(cell("Perf. Target", f1(s.perfTarget), "var(--muted)"));
+    const cAlpha = (s.mwrrStrat!=null && s.mwrrBench!=null) ? s.mwrrStrat - s.mwrrBench : null;
 
-  if(s.mwrrStrat != null){
-    if(parts.length) parts.push(sep);
-    parts.push(cell("MWRR · Stratégie",    f1(s.mwrrStrat), (s.mwrrStrat>=0?s.color:"var(--red)")));
-    parts.push(cell("MWRR · "+s.benchmarkName, f1(s.mwrrBench), "var(--muted)"));
-    if(s.mwrrStrat != null && s.mwrrBench != null){
-      const alpha = s.mwrrStrat - s.mwrrBench;
-      parts.push(cell("Alpha MWRR", f1(alpha), alpha>=0?"var(--green)":"var(--red)"));
-    }
+    out += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;'
+      + 'margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">'
+      + cell("Perf. Target",         s.perfTarget, "var(--muted)")
+      + cell("CAGR Stratégie",       s.mwrrStrat,  s.mwrrStrat!=null&&s.mwrrStrat>=0?s.color:"var(--red)")
+      + cell("CAGR "+s.benchmarkName,s.mwrrBench,  "var(--muted)")
+      + cell("Alpha CAGR",           cAlpha,        cAlpha!=null?(cAlpha>=0?"var(--green)":"var(--red)"):"var(--dim)")
+      + '</div>'
+      + '<div style="'+mono+'font-size:7px;color:var(--dim);margin-top:6px;text-align:right;line-height:1.5">'
+      + 'CAGR extrapolated from YTD performances</div>';
   }
 
-  if(!parts.length) return "";
-
-  return '<div style="display:flex;align-items:center;gap:16px;padding:10px 22px;border-bottom:1px solid var(--border);background:var(--bg2)">'
-    + parts.join("")
-    + '<span style="'+mono+'8px;color:var(--dim);margin-left:auto;max-width:200px;line-height:1.5;text-align:right">Adjusted Money Weighted Return based on the YTD performances</span>'
-    + '</div>';
+  return out;
 }
+
 /* ══ Render strategy tab ══ */
 function renderStratTab(id){
   const s=getS(id);
@@ -606,13 +612,7 @@ function renderStratTab(id){
 
     <div style="padding:14px 22px;border-bottom:1px solid var(--border)">
       <div class="box-label" style="margin-bottom:10px">Performance YTD vs Benchmark · Base 100${isReal?" · Échelle logarithmique · Données réelles":""}</div>
-      <div class="perf-strip" style="margin-bottom:14px">
-        <span class="ps-label">YTD</span>
-        <span class="ps-val ${pCls(ytdPct)}" style="color:${(ytdPct??0)>=0?s.color:'var(--red)'}">${f1(ytdPct)}</span>
-        <div class="divider-v"></div>
-        <div class="ps-bench-wrap"><span class="ps-bench-lbl">${s.benchmarkName}</span><span class="ps-bench-val ${pCls(bPct)}">${f1(bPct)}</span></div>
-        ${_alphaYtd}
-      </div>
+
       <div class="ch ch-md"><canvas id="ytd-${id}"></canvas></div>
       <div class="legend" style="margin-top:10px">
         <div class="leg-item"><div class="leg-line" style="background:${s.color}"></div>${s.displayName}</div>
