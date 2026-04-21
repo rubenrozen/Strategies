@@ -321,6 +321,7 @@ function getS(id){
     currencies:     live.currencies    ?? null,
     sectors:        live.sectors       ?? null,
     assetClasses:   live.assetClasses  ?? null,
+    weeklyPerformers: live.weeklyPerformers ?? null,
     mwrrYtd:        live.mwrrYtd       ?? null,
     ytdPct:         live.ytdPct        ?? null,
     ytdStrat:       live.ytdStrat      ?? null,
@@ -633,6 +634,48 @@ function toggleCollapse(cid){
   }
 }
 
+/* ══ Weekly top/bottom performers podium ══ */
+function buildPodiumBox(s){
+  const wp = s.weeklyPerformers;
+  if(!wp || (!wp.top?.length && !wp.bottom?.length))
+    return '<div class="box"><div class="box-hd"><span class="box-label">🏆 Performances Hebdo</span></div><div class="box-body" style="font-family:var(--mono);font-size:10px;color:var(--muted)">Données non disponibles</div></div>';
+
+  const medal = ["🥇","🥈","🥉"];
+
+  const row = (icon, name, perf, color) => {
+    if(!name) return '';
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">'
+      + '<span style="font-size:16px;flex-shrink:0">'+icon+'</span>'
+      + '<span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);flex:1">'+name+'</span>'
+      + '<span style="font-family:var(--mono);font-size:12px;font-weight:600;color:'+color+'">'
+      + (perf!=null?(perf>=0?"+":"")+perf.toFixed(1)+"%":"—")
+      + '</span></div>';
+  };
+
+  let html = '<div class="box"><div class="box-hd"><span class="box-label">🏆 Performances Hebdo</span><span class="box-sub">Top & flop de la semaine</span></div><div class="box-body">';
+
+  // Top 3
+  if(wp.top?.length){
+    html += '<div style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px">Meilleures</div>';
+    wp.top.forEach((p,i) => { html += row(medal[i], p.name, p.perf, "var(--green)"); });
+  }
+
+  // Separator
+  if(wp.top?.length && wp.bottom?.length)
+    html += '<div style="height:1px;background:var(--border);margin:10px 0"></div>';
+
+  // Bottom 3 — displayed worst-to-best (index 0 = worst)
+  if(wp.bottom?.length){
+    html += '<div style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px">Moins bonnes</div>';
+    // bottom[0]=worst, bottom[1]=2nd worst, bottom[2]=3rd worst → show 1st=worst
+    const skull = ["💀","👎","😬"];
+    wp.bottom.forEach((p,i) => { html += row(skull[i], p.name, p.perf, "var(--red)"); });
+  }
+
+  html += '</div></div>';
+  return html;
+}
+
 /* ══ Render strategy tab ══ */
 function renderStratTab(id){
   const s=getS(id);
@@ -652,9 +695,7 @@ function renderStratTab(id){
   const _alphaYtd = (ytdPct!=null&&bPctDisplay!=null)
     ? '<span class="ps-diff '+pCls(ytdPct-bPctDisplay)+'">Alpha YTD '+f1(ytdPct-bPctDisplay)+'</span>'
     : '';
-  const _acBox = (s.assetClasses&&s.assetClasses.length)
-    ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d’Actifs</span><span class="box-sub">Feuille Charts · Données réelles</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>'
-    : '';
+  // _acBox no longer full-width — rendered inline in g2 grid below
   const _sortino = (m.sortino!=null)
     ? '<div class="sortino-wrap"><div class="sortino-track"><div class="sortino-fill" style="width:'+Math.min(100,m.sortino/3*100).toFixed(1)+'%;background:'+(m.sortino>=2?'var(--green)':'var(--c1)')+'"></div></div><span class="sortino-lbl">/ 3.0</span></div>'
     : '';
@@ -690,7 +731,10 @@ function renderStratTab(id){
     <div class="box"><div class="box-hd"><span class="box-label">Allocation Sectorielle</span><span class="box-sub">${s.sectors?"Données réelles":"Données simulées"}</span></div><div class="box-body"><div class="ch ch-md"><canvas id="sec-${id}"></canvas></div><div class="legend" id="sec-legend-${id}" style="margin-top:10px"></div></div></div>
     <div class="box"><div class="box-hd"><span class="box-label">Exposition Devises</span><span class="box-sub">Balance cash · Exposition totale</span></div><div class="box-body">${renderCurrencies(s)}</div></div>
   </div>
-  ${_acBox}
+  <div class="g2">
+    ${buildPodiumBox(s)}
+    ${s.assetClasses&&s.assetClasses.length ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d’Actifs</span><span class="box-sub">Feuille Charts</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>' : ''}
+  </div>
 
   <div class="g4">
     <div class="mc"><div class="mc-lbl">TTM (12 mois)</div><div class="mc-val ${pCls(m.ttm)}">${f1(m.ttm)}</div><div class="mc-sub">Trailing 12 months</div></div>
