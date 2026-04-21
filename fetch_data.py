@@ -141,12 +141,27 @@ def extract_strategy_data(lib_rows: list, prt_rows: list) -> dict:
             "varHistoric":    parse_float(safe_get(prt_rows, 23, "F")),   # F23
             "varConditional": parse_float(safe_get(prt_rows, 24, "F")),   # F24
         }
+        # Weekly top/bottom performers (Portfolio G35:H40)
+        def gp(row, col): return safe_get(prt_rows, row, col) or None
+        result["weeklyPerformers"] = {
+            "top": [
+                {"name": gp(35,"G"), "perf": parse_float(safe_get(prt_rows,35,"H"))},
+                {"name": gp(36,"G"), "perf": parse_float(safe_get(prt_rows,36,"H"))},
+                {"name": gp(37,"G"), "perf": parse_float(safe_get(prt_rows,37,"H"))},
+            ],
+            "bottom": [
+                {"name": gp(38,"G"), "perf": parse_float(safe_get(prt_rows,38,"H"))},
+                {"name": gp(39,"G"), "perf": parse_float(safe_get(prt_rows,39,"H"))},
+                {"name": gp(40,"G"), "perf": parse_float(safe_get(prt_rows,40,"H"))},
+            ],
+        }
         result["composition"] = extract_composition(prt_rows)
         result["currencies"]  = extract_currencies(prt_rows)
         result["sectors"]     = compute_sectors(prt_rows)
     else:
         result["fetchError"]    = True
         result["metrics"]       = {}
+        result["weeklyPerformers"] = {"top": [], "bottom": []}
         result["composition"]   = {"equities": [], "bonds": [], "crypto": [], "futures": []}
         result["currencies"]    = []
         result["sectors"]       = []
