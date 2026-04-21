@@ -733,7 +733,7 @@ function renderStratTab(id){
   </div>
   <div class="g2">
     ${buildPodiumBox(s)}
-    ${s.assetClasses&&s.assetClasses.length ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d’Actifs</span><span class="box-sub">Feuille Charts</span></div><div class="box-body"><div class="ch" style="height:160px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>' : ''}
+    ${s.assetClasses&&s.assetClasses.length ? '<div class="box"><div class="box-hd"><span class="box-label">Répartition par Classe d’Actifs</span><span class="box-sub">Feuille Charts</span></div><div class="box-body"><div class="ch" style="height:300px"><canvas id="ac-'+id+'"></canvas></div><div id="ac-legend-'+id+'" class="legend" style="margin-top:10px"></div></div></div>' : ''}
   </div>
 
   <div class="g4">
