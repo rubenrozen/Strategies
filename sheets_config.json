@@ -1,9 +1,10 @@
 {
   "_comment": "Les Sheet IDs sont dans les GitHub Secrets (VALUEUNDERFLOW_SHEET_ID, TRENDSPOTTING_SHEET_ID, NEXTHORIZON_SHEET_ID). Seuls les GIDs et métadonnées sont ici. Trouve le GID d'un onglet dans l'URL quand tu le sélectionnes: ...#gid=[GID]",
   "correlation": {
-    "_comment": "Fichier séparé 'Strategies correlation matrices', onglet 'Correlation'",
+    "_comment": "Fichier séparé 'Strategies correlation matrices', onglets 'Correlation' et 'Performances'",
     "sheet_id_env": "CORRELATION_SHEET_ID",
-    "gid": "0"
+    "gid": "0",
+    "performances_gid": "2111858494"
   },
   "strategies": [
     {
