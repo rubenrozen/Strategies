@@ -359,26 +359,48 @@ def fetch_correlation(gc: gspread.Client, cfg: dict) -> dict | None:
     if not sheet_id:
         print("  ⚠  CORRELATION_SHEET_ID not set — skipping")
         return None
+
+    # ── Correlation matrix (Correlation tab) ──────────────────────────────
     gid = cfg.get("gid", "0")
     print(f"  Fetching correlation matrix (gid={gid})…")
     rows = fetch_tab(gc, sheet_id, gid)
-    if not rows: return None
-
     matrix = []
-    for i in range(len(CORR_SHEET_ORDER)):
-        row_0 = (CORR_START_ROW - 1) + i
-        row_vals = []
-        for j in range(len(CORR_SHEET_ORDER)):
-            col_0 = CORR_START_COL + j
-            raw = rows[row_0][col_0].strip() if (row_0 < len(rows) and col_0 < len(rows[row_0])) else ""
-            val = parse_float(raw)
-            row_vals.append(round(val, 4) if val is not None else None)
-        matrix.append(row_vals)
+    if rows:
+        for i in range(len(CORR_SHEET_ORDER)):
+            row_0 = (CORR_START_ROW - 1) + i
+            row_vals = []
+            for j in range(len(CORR_SHEET_ORDER)):
+                col_0 = CORR_START_COL + j
+                raw = rows[row_0][col_0].strip() if (row_0 < len(rows) and col_0 < len(rows[row_0])) else ""
+                val = parse_float(raw)
+                row_vals.append(round(val, 4) if val is not None else None)
+            matrix.append(row_vals)
+        print(f"  ✓  Correlation matrix ({len(CORR_SHEET_ORDER)}×{len(CORR_SHEET_ORDER)})")
 
-    print(f"  ✓  Correlation matrix ({len(CORR_SHEET_ORDER)}×{len(CORR_SHEET_ORDER)})")
-    for i, sid in enumerate(CORR_SHEET_ORDER):
-        print(f"     {sid:20s} {matrix[i]}")
-    return {"order": CORR_SHEET_ORDER, "values": matrix}
+    # ── Strategy rankings (Performances tab) ──────────────────────────────
+    perf_gid = cfg.get("performances_gid", "")
+    rankings = {"weekly": [], "monthly": []}
+    if perf_gid:
+        print(f"  Fetching performances ranking (gid={perf_gid})…")
+        p_rows = fetch_tab(gc, sheet_id, perf_gid)
+        if p_rows:
+            def gp(row_1based, col):
+                return safe_get(p_rows, row_1based, col) or None
+            rankings["weekly"] = [
+                {"name": gp(15,"C"), "perf": parse_float(safe_get(p_rows,15,"D"))},
+                {"name": gp(16,"C"), "perf": parse_float(safe_get(p_rows,16,"D"))},
+                {"name": gp(17,"C"), "perf": parse_float(safe_get(p_rows,17,"D"))},
+            ]
+            rankings["monthly"] = [
+                {"name": gp(18,"C"), "perf": parse_float(safe_get(p_rows,18,"D"))},
+                {"name": gp(19,"C"), "perf": parse_float(safe_get(p_rows,19,"D"))},
+                {"name": gp(20,"C"), "perf": parse_float(safe_get(p_rows,20,"D"))},
+            ]
+            print(f"  ✓  Rankings: weekly={[r['name'] for r in rankings['weekly']]} monthly={[r['name'] for r in rankings['monthly']]}")
+    else:
+        print("  ⚠  performances_gid not set in sheets_config.json — skipping rankings")
+
+    return {"order": CORR_SHEET_ORDER, "values": matrix, "rankings": rankings}
 
 
 # ─── Entry point ──────────────────────────────────────────────────────────────
