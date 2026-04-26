@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-25T11:58:42Z",
+  "lastUpdated": "2026-04-26T12:00:28Z",
   "strategies": [
     {
       "fetchError": false,
@@ -251,13 +251,13 @@
           102.43
         ]
       },
-      "portfolioTotal": 70312.86,
+      "portfolioTotal": 70311.24,
       "metrics": {
-        "sharpe": -12.81,
+        "sharpe": -12.84,
         "sortino": -0.4,
         "sortinoTarget": 6.0,
         "perfTarget": 6.0,
-        "ttm": 1.3,
+        "ttm": 1.29,
         "volatility": 0.19,
         "varParametric": 0.46,
         "varHistoric": 2.01,
@@ -347,7 +347,7 @@
             "name": "Nestlé",
             "currency": "CHF",
             "sector": "Cons staples",
-            "value": 2997.64
+            "value": 2995.94
           },
           {
             "name": "Novo Nordisk",
@@ -391,25 +391,25 @@
             "name": "FR001400H7V7",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3309.955933
+            "quantity": 3310.024535
           },
           {
             "name": "FR001400PM68",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3359.848907
+            "quantity": 3359.938248
           },
           {
             "name": "DE0001141620",
             "underlying": "Gov Germany",
             "currency": "€",
-            "quantity": 3585.69863
+            "quantity": 3585.472603
           },
           {
             "name": "XS1874122267",
             "underlying": "Corpo France",
             "currency": "€",
-            "quantity": 2443.711222
+            "quantity": 2443.859645
           }
         ],
         "crypto": [],
@@ -455,7 +455,7 @@
         },
         {
           "sector": "Gov France",
-          "value": 6669.8,
+          "value": 6669.96,
           "pct": 11.27
         },
         {
@@ -470,7 +470,7 @@
         },
         {
           "sector": "Cons staples",
-          "value": 5399.19,
+          "value": 5397.49,
           "pct": 9.12
         },
         {
@@ -480,21 +480,21 @@
         },
         {
           "sector": "Gov Germany",
-          "value": 3585.7,
+          "value": 3585.47,
           "pct": 6.06
         },
         {
           "sector": "Corpo France",
-          "value": 2443.71,
+          "value": 2443.86,
           "pct": 4.13
         }
       ],
-      "mwrrYtd": 4.89,
+      "mwrrYtd": 4.84,
       "ytdPct": 1.5,
       "ytdStrat": 5.94,
       "ytdBench": 2.43,
-      "mwrrStrat": 20.29,
-      "mwrrBench": 7.99,
+      "mwrrStrat": 20.09,
+      "mwrrBench": 7.91,
       "assetClasses": [
         {
           "name": "Cash",
@@ -503,12 +503,12 @@
         },
         {
           "name": "Equity",
-          "value": 46472.0,
+          "value": 46470.29,
           "pct": 64.71
         },
         {
           "name": "Bonds",
-          "value": 12699.21,
+          "value": 12699.3,
           "pct": 17.68
         },
         {
@@ -779,7 +779,7 @@
       },
       "portfolioTotal": 82997.18,
       "metrics": {
-        "sharpe": 22.52,
+        "sharpe": 22.49,
         "sortino": 6.01,
         "sortinoTarget": 10.0,
         "perfTarget": 10.0,
@@ -961,12 +961,12 @@
           "pct": 7.36
         }
       ],
-      "mwrrYtd": 111.56,
+      "mwrrYtd": 110.19,
       "ytdPct": 26.37,
       "ytdStrat": 17.65,
       "ytdBench": 4.67,
-      "mwrrStrat": 68.27,
-      "mwrrBench": 15.73,
+      "mwrrStrat": 67.51,
+      "mwrrBench": 15.58,
       "assetClasses": [
         {
           "name": "Cash",
@@ -1249,14 +1249,14 @@
           108.65
         ]
       },
-      "portfolioTotal": 77228.3,
+      "portfolioTotal": 77249.13,
       "metrics": {
-        "sharpe": 80.49,
-        "sortino": 6.5,
+        "sharpe": 80.45,
+        "sortino": 6.51,
         "sortinoTarget": 16.0,
         "perfTarget": 16.0,
-        "ttm": 107.76,
-        "volatility": 1.29,
+        "ttm": 107.92,
+        "volatility": 1.3,
         "varParametric": 3.49,
         "varHistoric": 6.05,
         "varConditional": 9.12
@@ -1399,7 +1399,7 @@
             "name": "Kioxia",
             "currency": "¥",
             "sector": "Memory chips",
-            "value": 3332.0
+            "value": 3345.85
           },
           {
             "name": "Sandisk",
@@ -1525,13 +1525,13 @@
             "name": "ABB",
             "currency": "CHF",
             "sector": "RaaS",
-            "value": 2538.42
+            "value": 2536.98
           },
           {
             "name": "Fanuc",
             "currency": "¥",
             "sector": "RaaS",
-            "value": 1004.67
+            "value": 1008.85
           },
           {
             "name": "Zebra",
@@ -1597,7 +1597,7 @@
             "name": "Sky perfect JSAT",
             "currency": "¥",
             "sector": "Space infrasctructure",
-            "value": 1019.93
+            "value": 1024.17
           },
           {
             "name": "Globalstar",
@@ -1804,28 +1804,28 @@
       "sectors": [
         {
           "sector": "Memory chips",
-          "value": 19591.63,
-          "pct": 27.92
+          "value": 19605.48,
+          "pct": 27.93
         },
         {
           "sector": "Space infrasctructure",
-          "value": 15684.45,
+          "value": 15688.69,
           "pct": 22.35
         },
         {
           "sector": "RaaS",
-          "value": 10131.04,
+          "value": 10133.78,
           "pct": 14.44
         },
         {
           "sector": "Electroceuticals",
           "value": 8754.97,
-          "pct": 12.48
+          "pct": 12.47
         },
         {
           "sector": "Drones",
           "value": 8396.3,
-          "pct": 11.97
+          "pct": 11.96
         },
         {
           "sector": "Nuclear",
@@ -1833,12 +1833,12 @@
           "pct": 10.84
         }
       ],
-      "mwrrYtd": 18.96,
-      "ytdPct": 5.57,
+      "mwrrYtd": 18.88,
+      "ytdPct": 5.6,
       "ytdStrat": 5.56,
       "ytdBench": 8.65,
-      "mwrrStrat": 18.92,
-      "mwrrBench": 30.44,
+      "mwrrStrat": 18.74,
+      "mwrrBench": 30.14,
       "assetClasses": [
         {
           "name": "Cash",
@@ -1847,7 +1847,7 @@
         },
         {
           "name": "Equity",
-          "value": 70167.74,
+          "value": 70188.57,
           "pct": 90.18
         },
         {
@@ -1881,17 +1881,17 @@
     "values": [
       [
         1.0,
-        0.5556,
-        0.5868
+        0.5733,
+        0.6013
       ],
       [
-        0.5556,
+        0.5733,
         1.0,
-        0.7026
+        0.7184
       ],
       [
-        0.5868,
-        0.7026,
+        0.6013,
+        0.7184,
         1.0
       ]
     ],
