@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-29T13:01:58Z",
+  "lastUpdated": "2026-04-30T13:00:57Z",
   "strategies": [
     {
       "fetchError": false,
@@ -88,7 +88,8 @@
           "2026-04-23",
           "2026-04-24",
           "2026-04-27",
-          "2026-04-28"
+          "2026-04-28",
+          "2026-04-29"
         ],
         "portfolio": [
           100.0,
@@ -171,7 +172,8 @@
           105.08,
           105.94,
           105.69,
-          105.8
+          105.8,
+          105.66
         ],
         "benchmark": [
           100.0,
@@ -254,48 +256,49 @@
           102.59,
           102.43,
           102.3,
-          102.24
+          102.24,
+          101.66
         ]
       },
-      "portfolioTotal": 70073.15,
+      "portfolioTotal": 70349.67,
       "metrics": {
-        "sharpe": -17.94,
-        "sortino": -0.57,
+        "sharpe": -10.83,
+        "sortino": -0.35,
         "sortinoTarget": 6.0,
         "perfTarget": 6.0,
-        "ttm": 0.29,
+        "ttm": 1.64,
         "volatility": 0.19,
-        "varParametric": 0.46,
-        "varHistoric": 1.98,
-        "varConditional": 2.98
+        "varParametric": 0.47,
+        "varHistoric": 1.99,
+        "varConditional": 2.99
       },
       "weeklyPerformers": {
         "top": [
           {
+            "name": "Visa",
+            "perf": 8.22
+          },
+          {
             "name": "Grand Canyon Edu",
-            "perf": 2.66
+            "perf": 3.53
           },
           {
             "name": "Welltower",
-            "perf": 2.63
-          },
-          {
-            "name": "Procter & Gamble",
-            "perf": 0.67
+            "perf": 1.6
           }
         ],
         "bottom": [
           {
-            "name": "Nestlé",
-            "perf": -2.29
+            "name": "Sony",
+            "perf": -2.47
           },
           {
-            "name": "TSMC",
-            "perf": -2.51
+            "name": "Fresenius",
+            "perf": -2.68
           },
           {
             "name": "United health group",
-            "perf": -5.19
+            "perf": -4.72
           }
         ]
       },
@@ -305,91 +308,91 @@
             "name": "Welltower",
             "currency": "$",
             "sector": "Finance",
-            "value": 3845.64
+            "value": 3807.63
           },
           {
             "name": "Aedifica",
             "currency": "€",
             "sector": "Finance",
-            "value": 3161.4
+            "value": 3152.6
           },
           {
             "name": "Visa",
             "currency": "$",
             "sector": "Finance",
-            "value": 3437.11
+            "value": 3721.53
           },
           {
             "name": "Procter & Gamble",
             "currency": "$",
             "sector": "Cons staples",
-            "value": 2422.73
+            "value": 2378.96
           },
           {
             "name": "Johnson & Johnson",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 3699.63
+            "value": 3692.87
           },
           {
             "name": "Amazon",
             "currency": "$",
             "sector": "Cons discretionary",
-            "value": 3773.9
+            "value": 3822.84
           },
           {
             "name": "United health group",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 2675.6
+            "value": 2689.34
           },
           {
             "name": "Fresenius",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 1597.07
+            "value": 1572.4
           },
           {
             "name": "Nestlé",
             "currency": "CHF",
             "sector": "Cons staples",
-            "value": 2917.32
+            "value": 2934.68
           },
           {
             "name": "Novo Nordisk",
             "currency": "$",
             "sector": "Healthcare",
-            "value": 1513.28
+            "value": 1481.09
           },
           {
             "name": "Allianz",
             "currency": "€",
             "sector": "Finance",
-            "value": 3878.0
+            "value": 3870.0
           },
           {
             "name": "TSMC",
             "currency": "$",
             "sector": "Tech",
-            "value": 6372.15
+            "value": 6397.02
           },
           {
             "name": "Pearson",
             "currency": "£",
             "sector": "Communication",
-            "value": 2978.87
+            "value": 3011.69
           },
           {
             "name": "Grand Canyon Edu",
             "currency": "$",
             "sector": "Communication",
-            "value": 3299.84
+            "value": 3328.11
           },
           {
             "name": "Sony",
             "currency": "$",
             "sector": "Cons discretionary",
-            "value": 648.68
+            "value": 642.58
           }
         ],
         "bonds": [
@@ -397,25 +400,25 @@
             "name": "FR001400H7V7",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3310.230565
+            "quantity": 3310.299316
           },
           {
             "name": "FR001400PM68",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3360.206491
+            "quantity": 3360.29598
           },
           {
             "name": "DE0001141620",
             "underlying": "Gov Germany",
             "currency": "€",
-            "quantity": 3584.794521
+            "quantity": 3584.568493
           },
           {
             "name": "XS1874122267",
             "underlying": "Corpo France",
             "currency": "€",
-            "quantity": 2444.305076
+            "quantity": 2444.453607
           }
         ],
         "crypto": [],
@@ -425,12 +428,12 @@
         {
           "code": "EUR",
           "balance": 1448.58,
-          "exposure": 21188.0
+          "exposure": 21171.0
         },
         {
           "code": "USD",
           "balance": 10623.77,
-          "exposure": 42327.0
+          "exposure": 42537.0
         },
         {
           "code": "JPY",
@@ -440,82 +443,82 @@
         {
           "code": "GBP",
           "balance": 0.0,
-          "exposure": 2977.0
+          "exposure": 3010.0
         },
         {
           "code": "CHF",
           "balance": 342.0,
-          "exposure": 3288.0
+          "exposure": 3298.0
         }
       ],
       "sectors": [
         {
           "sector": "Finance",
-          "value": 14322.15,
-          "pct": 24.31
+          "value": 14551.76,
+          "pct": 24.58
         },
         {
           "sector": "Healthcare",
-          "value": 9485.58,
-          "pct": 16.1
+          "value": 9435.7,
+          "pct": 15.94
         },
         {
           "sector": "Gov France",
-          "value": 6670.44,
-          "pct": 11.32
+          "value": 6670.6,
+          "pct": 11.27
         },
         {
           "sector": "Tech",
-          "value": 6372.15,
+          "value": 6397.02,
           "pct": 10.81
         },
         {
           "sector": "Communication",
-          "value": 6278.71,
-          "pct": 10.66
+          "value": 6339.8,
+          "pct": 10.71
         },
         {
           "sector": "Cons staples",
-          "value": 5340.05,
-          "pct": 9.06
+          "value": 5313.64,
+          "pct": 8.98
         },
         {
           "sector": "Cons discretionary",
-          "value": 4422.58,
-          "pct": 7.51
+          "value": 4465.42,
+          "pct": 7.54
         },
         {
           "sector": "Gov Germany",
-          "value": 3584.79,
-          "pct": 6.08
+          "value": 3584.57,
+          "pct": 6.05
         },
         {
           "sector": "Corpo France",
-          "value": 2444.31,
-          "pct": 4.15
+          "value": 2444.45,
+          "pct": 4.13
         }
       ],
-      "mwrrYtd": 3.62,
-      "ytdPct": 1.16,
-      "ytdStrat": 5.8,
-      "ytdBench": 2.24,
-      "mwrrStrat": 19.04,
-      "mwrrBench": 7.11,
+      "mwrrYtd": 4.85,
+      "ytdPct": 1.56,
+      "ytdStrat": 5.66,
+      "ytdBench": 1.66,
+      "mwrrStrat": 18.39,
+      "mwrrBench": 5.18,
       "assetClasses": [
         {
           "name": "Cash",
           "value": 12640.65,
-          "pct": 17.66
+          "pct": 17.59
         },
         {
           "name": "Equity",
-          "value": 46221.21,
-          "pct": 64.59
+          "value": 46503.34,
+          "pct": 64.73
         },
         {
           "name": "Bonds",
-          "value": 12699.54,
-          "pct": 17.75
+          "value": 12699.62,
+          "pct": 17.68
         },
         {
           "name": "Futures",
@@ -620,7 +623,8 @@
           "2026-04-23",
           "2026-04-24",
           "2026-04-27",
-          "2026-04-28"
+          "2026-04-28",
+          "2026-04-29"
         ],
         "portfolio": [
           100.0,
@@ -703,7 +707,8 @@
           118.67,
           117.65,
           117.25,
-          117.32
+          117.32,
+          115.74
         ],
         "benchmark": [
           100.0,
@@ -786,48 +791,49 @@
           103.84,
           104.67,
           104.8,
-          104.28
+          104.28,
+          104.24
         ]
       },
-      "portfolioTotal": 81935.83,
+      "portfolioTotal": 81338.85,
       "metrics": {
-        "sharpe": 19.52,
-        "sortino": 5.19,
+        "sharpe": 18.17,
+        "sortino": 4.82,
         "sortinoTarget": 10.0,
         "perfTarget": 10.0,
-        "ttm": 55.59,
-        "volatility": 2.66,
-        "varParametric": 6.1,
-        "varHistoric": 3.0,
-        "varConditional": 4.26
+        "ttm": 51.94,
+        "volatility": 2.65,
+        "varParametric": 6.08,
+        "varHistoric": 3.02,
+        "varConditional": 4.25
       },
       "weeklyPerformers": {
         "top": [
           {
             "name": "Rheinmetall",
-            "perf": 3.71
+            "perf": 2.5
           },
           {
             "name": "Total Energies",
-            "perf": 2.29
+            "perf": 1.75
           },
           {
-            "name": "BNP Paribas",
-            "perf": 2.01
+            "name": "Palo Alto Network",
+            "perf": 1.68
           }
         ],
         "bottom": [
           {
-            "name": "Vertiv holdings",
-            "perf": -5.7
+            "name": "Agnico Eagle",
+            "perf": -8.33
           },
           {
             "name": "Wheaton Precious",
-            "perf": -7.18
+            "perf": -10.43
           },
           {
             "name": "Newmont Corp",
-            "perf": -8.95
+            "perf": -10.85
           }
         ]
       },
@@ -837,97 +843,97 @@
             "name": "Newmont Corp",
             "currency": "$",
             "sector": "Materials",
-            "value": 3757.92
+            "value": 3680.26
           },
           {
             "name": "Agnico Eagle",
             "currency": "$",
             "sector": "Materials",
-            "value": 4044.08
+            "value": 3923.6
           },
           {
             "name": "Wheaton Precious",
             "currency": "$",
             "sector": "Materials",
-            "value": 2212.86
+            "value": 2135.62
           },
           {
             "name": "Rheinmetall",
             "currency": "€",
             "sector": "Industrial",
-            "value": 4104.6
+            "value": 4056.6
           },
           {
             "name": "Leonardo",
             "currency": "€",
             "sector": "Industrial",
-            "value": 2892.45
+            "value": 2913.9
           },
           {
             "name": "Lockheed Martin",
             "currency": "$",
             "sector": "Industrial",
-            "value": 3941.38
+            "value": 3922.99
           },
           {
             "name": "Broadcom",
             "currency": "$",
             "sector": "Tech",
-            "value": 3417.95
+            "value": 3466.6
           },
           {
             "name": "Vertiv holdings",
             "currency": "$",
             "sector": "Tech",
-            "value": 5215.1
+            "value": 5235.68
           },
           {
             "name": "Microsoft",
             "currency": "$",
             "sector": "Tech",
-            "value": 1467.78
+            "value": 1451.65
           },
           {
             "name": "Crowdstrike",
             "currency": "$",
             "sector": "Tech",
-            "value": 2722.64
+            "value": 2707.49
           },
           {
             "name": "Palo Alto Network",
             "currency": "$",
             "sector": "Tech",
-            "value": 1856.63
+            "value": 1862.6
           },
           {
             "name": "Total Energies",
             "currency": "€",
             "sector": "Energy",
-            "value": 8244.6
+            "value": 8200.5
           },
           {
             "name": "Total Energies",
             "currency": "$",
             "sector": "Energy",
-            "value": 5224.89
+            "value": 5110.89
           },
           {
             "name": "Caterpillar",
             "currency": "$",
             "sector": "Industrial",
-            "value": 3495.78
+            "value": 3462.96
           },
           {
             "name": "Goldman Sachs",
             "currency": "$",
             "sector": "Finance",
-            "value": 2376.18
+            "value": 2322.86
           },
           {
             "name": "BNP Paribas",
             "currency": "$",
             "sector": "Finance",
-            "value": 1940.51
+            "value": 1867.53
           }
         ],
         "bonds": [],
@@ -938,57 +944,57 @@
         {
           "code": "EUR",
           "balance": 20907.29,
-          "exposure": 32616.0
+          "exposure": 32564.0
         },
         {
           "code": "USD",
           "balance": 4816.38,
-          "exposure": 42763.0
+          "exposure": 42264.0
         }
       ],
       "sectors": [
         {
           "sector": "Tech",
-          "value": 14680.1,
-          "pct": 25.79
+          "value": 14724.02,
+          "pct": 26.14
         },
         {
           "sector": "Industrial",
-          "value": 14434.21,
-          "pct": 25.36
+          "value": 14356.45,
+          "pct": 25.49
         },
         {
           "sector": "Energy",
-          "value": 13469.49,
-          "pct": 23.67
+          "value": 13311.39,
+          "pct": 23.63
         },
         {
           "sector": "Materials",
-          "value": 10014.86,
-          "pct": 17.6
+          "value": 9739.48,
+          "pct": 17.29
         },
         {
           "sector": "Finance",
-          "value": 4316.69,
-          "pct": 7.58
+          "value": 4190.39,
+          "pct": 7.44
         }
       ],
-      "mwrrYtd": 98.21,
-      "ytdPct": 24.75,
-      "ytdStrat": 17.32,
-      "ytdBench": 4.28,
-      "mwrrStrat": 63.9,
-      "mwrrBench": 13.86,
+      "mwrrYtd": 92.7,
+      "ytdPct": 23.85,
+      "ytdStrat": 15.74,
+      "ytdBench": 4.24,
+      "mwrrStrat": 56.58,
+      "mwrrBench": 13.59,
       "assetClasses": [
         {
           "name": "Cash",
           "value": 25723.67,
-          "pct": 31.13
+          "pct": 31.35
         },
         {
           "name": "Equity",
-          "value": 56915.35,
-          "pct": 68.87
+          "value": 56321.74,
+          "pct": 68.65
         },
         {
           "name": "Bonds",
@@ -1098,7 +1104,8 @@
           "2026-04-23",
           "2026-04-24",
           "2026-04-27",
-          "2026-04-28"
+          "2026-04-28",
+          "2026-04-29"
         ],
         "portfolio": [
           100.0,
@@ -1181,7 +1188,8 @@
           108.0,
           105.56,
           109.48,
-          109.57
+          109.57,
+          107.91
         ],
         "benchmark": [
           100.0,
@@ -1264,48 +1272,49 @@
           106.67,
           108.65,
           108.68,
-          107.6
+          107.6,
+          108.22
         ]
       },
-      "portfolioTotal": 77879.08,
+      "portfolioTotal": 77597.54,
       "metrics": {
-        "sharpe": 78.65,
-        "sortino": 6.52,
+        "sharpe": 74.95,
+        "sortino": 6.31,
         "sortinoTarget": 16.0,
         "perfTarget": 16.0,
-        "ttm": 107.98,
-        "volatility": 1.33,
-        "varParametric": 3.57,
-        "varHistoric": 6.03,
-        "varConditional": 9.08
+        "ttm": 104.75,
+        "volatility": 1.35,
+        "varParametric": 3.64,
+        "varHistoric": 6.02,
+        "varConditional": 9.06
       },
       "weeklyPerformers": {
         "top": [
           {
             "name": "Nexgen energy",
-            "perf": 32.58
+            "perf": 29.76
           },
           {
             "name": "MDA Space",
-            "perf": 28.0
+            "perf": 23.04
           },
           {
             "name": "Macronix",
-            "perf": 26.52
+            "perf": 16.67
           }
         ],
         "bottom": [
           {
-            "name": "Draganfly",
-            "perf": -10.05
-          },
-          {
             "name": "Comtech Telecommunications",
-            "perf": -11.11
+            "perf": -11.62
           },
           {
-            "name": "Viasat",
-            "perf": -12.94
+            "name": "ClearPoint Neuro Inc",
+            "perf": -12.22
+          },
+          {
+            "name": "Draganfly",
+            "perf": -13.63
           }
         ]
       },
@@ -1315,457 +1324,457 @@
             "name": "EHang holdings",
             "currency": "$",
             "sector": "Drones",
-            "value": 168.58
+            "value": 158.69
           },
           {
             "name": "Draganfly",
             "currency": "$",
             "sector": "Drones",
-            "value": 135.41
+            "value": 130.04
           },
           {
             "name": "Oracle",
             "currency": "$",
             "sector": "Drones",
-            "value": 425.61
+            "value": 420.22
           },
           {
             "name": "Parrot",
             "currency": "€",
             "sector": "Drones",
-            "value": 539.0
+            "value": 535.0
           },
           {
             "name": "Ageagle aerial system",
             "currency": "$",
             "sector": "Drones",
-            "value": 266.71
+            "value": 256.5
           },
           {
             "name": "Red cat holdings",
             "currency": "$",
             "sector": "Drones",
-            "value": 969.4
+            "value": 946.47
           },
           {
             "name": "Ondas holdings",
             "currency": "$",
             "sector": "Drones",
-            "value": 895.88
+            "value": 811.39
           },
           {
             "name": "Frequentis",
             "currency": "€",
             "sector": "Drones",
-            "value": 513.8
+            "value": 519.4
           },
           {
             "name": "Indra",
             "currency": "€",
             "sector": "Drones",
-            "value": 496.7
+            "value": 488.6
           },
           {
             "name": "Autodesk",
             "currency": "$",
             "sector": "Drones",
-            "value": 401.52
+            "value": 403.33
           },
           {
             "name": "Hexagon",
             "currency": "SEK",
             "sector": "Drones",
-            "value": 228.12
+            "value": 228.46
           },
           {
             "name": "Keysight",
             "currency": "$",
             "sector": "Drones",
-            "value": 568.13
+            "value": 573.63
           },
           {
             "name": "Palantir",
             "currency": "$",
             "sector": "Drones",
-            "value": 362.06
+            "value": 353.89
           },
           {
             "name": "Elbit systems",
             "currency": "$",
             "sector": "Drones",
-            "value": 1425.98
+            "value": 1401.33
           },
           {
             "name": "Hensoldt",
             "currency": "€",
             "sector": "Drones",
-            "value": 537.32
+            "value": 534.8
           },
           {
             "name": "Freedom holding Corp",
             "currency": "$",
             "sector": "Drones",
-            "value": 384.68
+            "value": 378.59
           },
           {
             "name": "Micron technologies",
             "currency": "$",
             "sector": "Memory chips",
-            "value": 2586.55
+            "value": 2659.67
           },
           {
             "name": "Kioxia",
             "currency": "¥",
             "sector": "Memory chips",
-            "value": 3492.39
+            "value": 3659.62
           },
           {
             "name": "Sandisk",
             "currency": "$",
             "sector": "Memory chips",
-            "value": 7711.73
+            "value": 8189.0
           },
           {
             "name": "Winbond electronics",
             "currency": "$",
             "sector": "Memory chips",
-            "value": 1188.67
+            "value": 1151.67
           },
           {
             "name": "Nanya technologies",
             "currency": "$",
             "sector": "Memory chips",
-            "value": 1205.34
+            "value": 1105.5
           },
           {
             "name": "Gigadevice",
             "currency": "CNY",
             "sector": "Memory chips",
-            "value": 579.35
+            "value": 586.94
           },
           {
             "name": "Macronix",
             "currency": "$",
             "sector": "Memory chips",
-            "value": 4282.8
+            "value": 3950.05
           },
           {
             "name": "Rolls Royce",
             "currency": "£",
             "sector": "Nuclear",
-            "value": 514.28
+            "value": 552.88
           },
           {
             "name": "Oklo",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 472.49
+            "value": 444.46
           },
           {
             "name": "Nuscale",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 505.22
+            "value": 483.92
           },
           {
             "name": "Nano nuclear technologies",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 405.37
+            "value": 383.38
           },
           {
             "name": "Lightbridge",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 482.39
+            "value": 437.84
           },
           {
             "name": "BWX technologies",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 739.21
+            "value": 711.63
           },
           {
             "name": "Centrus energy corp",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 527.25
+            "value": 492.42
           },
           {
             "name": "Uranium royalty corp",
             "currency": "CAD",
             "sector": "Nuclear",
-            "value": 315.63
+            "value": 312.11
           },
           {
             "name": "Nexgen energy",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 702.69
+            "value": 687.84
           },
           {
             "name": "Energy fuels Inc",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 880.07
+            "value": 837.04
           },
           {
             "name": "Kazatomprom",
             "currency": "€",
             "sector": "Nuclear",
-            "value": 1056.0
+            "value": 1113.0
           },
           {
             "name": "Cameco",
             "currency": "$",
             "sector": "Nuclear",
-            "value": 795.42
+            "value": 781.73
           },
           {
             "name": "Richtech robotics",
             "currency": "$",
             "sector": "RaaS",
-            "value": 927.08
+            "value": 911.85
           },
           {
             "name": "Sarcos",
             "currency": "$",
             "sector": "RaaS",
-            "value": 1579.76
+            "value": 1490.25
           },
           {
             "name": "Kraken",
             "currency": "$",
             "sector": "RaaS",
-            "value": 1977.27
+            "value": 1954.51
           },
           {
             "name": "ABB",
             "currency": "CHF",
             "sector": "RaaS",
-            "value": 2497.35
+            "value": 2561.64
           },
           {
             "name": "Fanuc",
             "currency": "¥",
             "sector": "RaaS",
-            "value": 1115.57
+            "value": 1116.43
           },
           {
             "name": "Zebra",
             "currency": "$",
             "sector": "RaaS",
-            "value": 1124.5
+            "value": 1105.71
           },
           {
             "name": "Knightscope",
             "currency": "$",
             "sector": "RaaS",
-            "value": 792.45
+            "value": 784.88
           },
           {
             "name": "Comtech Telecommunications",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 376.13
+            "value": 374.06
           },
           {
             "name": "Gilat",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 817.6
+            "value": 869.8
           },
           {
             "name": "Intuitive machine",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 1218.71
+            "value": 1229.32
           },
           {
             "name": "Redwire",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 448.21
+            "value": 426.47
           },
           {
             "name": "MDA Space",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 529.32
+            "value": 508.89
           },
           {
             "name": "Blacksky",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 880.72
+            "value": 893.28
           },
           {
             "name": "Spire global",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 790.82
+            "value": 784.01
           },
           {
             "name": "PlanetLabs",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 958.25
+            "value": 932.42
           },
           {
             "name": "Sky perfect JSAT",
             "currency": "¥",
             "sector": "Space infrasctructure",
-            "value": 1027.11
+            "value": 1083.14
           },
           {
             "name": "Globalstar",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 1042.23
+            "value": 1046.89
           },
           {
             "name": "Echostar",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 740.21
+            "value": 716.87
           },
           {
             "name": "Viasat",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 9.23
+            "value": 10.13
           },
           {
             "name": "Eutelsat",
             "currency": "€",
             "sector": "Space infrasctructure",
-            "value": 326.25
+            "value": 340.0
           },
           {
             "name": "SES",
             "currency": "€",
             "sector": "Space infrasctructure",
-            "value": 398.46
+            "value": 410.64
           },
           {
             "name": "AST Spacemobile",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 430.13
+            "value": 418.05
           },
           {
             "name": "Iridium",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 670.5
+            "value": 653.37
           },
           {
             "name": "Rocketlab",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 604.64
+            "value": 592.66
           },
           {
             "name": "Airbus",
             "currency": "€",
             "sector": "Space infrasctructure",
-            "value": 863.8
+            "value": 880.7
           },
           {
             "name": "Raytheon",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 750.9
+            "value": 738.67
           },
           {
             "name": "Microsoft",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 733.89
+            "value": 725.82
           },
           {
             "name": "Alphabet",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 897.11
+            "value": 897.59
           },
           {
             "name": "Amazon",
             "currency": "$",
             "sector": "Space infrasctructure",
-            "value": 888.02
+            "value": 899.59
           },
           {
             "name": "Neuronetics",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 700.98
+            "value": 726.74
           },
           {
             "name": "Brainsway",
             "currency": "ILS",
             "sector": "Electroceuticals",
-            "value": 1373.93
+            "value": 1417.82
           },
           {
             "name": "Vivani medicals",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 702.69
+            "value": 677.15
           },
           {
             "name": "Onward Medical",
             "currency": "€",
             "sector": "Electroceuticals",
-            "value": 819.0
+            "value": 786.0
           },
           {
             "name": "NeuroPace",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 1155.07
+            "value": 1131.32
           },
           {
             "name": "Nyxoah",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 411.7
+            "value": 400.82
           },
           {
             "name": "Snap Inc",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 457.77
+            "value": 460.16
           },
           {
             "name": "Integra Lifesciences Holdings Corp",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 642.68
+            "value": 603.28
           },
           {
             "name": "ClearPoint Neuro Inc",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 473.59
+            "value": 442.03
           },
           {
             "name": "Abbott",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 641.89
+            "value": 624.69
           },
           {
             "name": "Medtronic",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 560.1
+            "value": 542.88
           },
           {
             "name": "Boston Scientific",
             "currency": "$",
             "sector": "Electroceuticals",
-            "value": 699.52
+            "value": 684.08
           }
         ],
         "bonds": [],
@@ -1776,97 +1785,97 @@
         {
           "code": "EUR",
           "balance": 4805.51,
-          "exposure": 10356.0
+          "exposure": 10414.0
         },
         {
           "code": "USD",
           "balance": 2226.84,
-          "exposure": 55971.0
+          "exposure": 55203.0
         },
         {
           "code": "JPY",
           "balance": 43.09,
-          "exposure": 5640.0
+          "exposure": 5910.0
         },
         {
           "code": "GBP",
           "balance": 213.93,
-          "exposure": 761.0
+          "exposure": 799.0
         },
         {
           "code": "ILS",
           "balance": 91.25,
-          "exposure": 1398.0
+          "exposure": 1438.0
         },
         {
           "code": "CHF",
           "balance": 255.97,
-          "exposure": 2775.0
+          "exposure": 2830.0
         },
         {
           "code": "CNY",
           "balance": 5.33,
-          "exposure": 580.0
+          "exposure": 587.0
         },
         {
           "code": "SEK",
           "balance": 2.03,
-          "exposure": 227.0
+          "exposure": 228.0
         },
         {
           "code": "CAD",
           "balance": 2.03,
-          "exposure": 316.0
+          "exposure": 313.0
         }
       ],
       "sectors": [
         {
           "sector": "Memory chips",
-          "value": 21046.83,
-          "pct": 29.72
+          "value": 21302.45,
+          "pct": 30.2
         },
         {
           "sector": "Space infrasctructure",
-          "value": 15402.24,
-          "pct": 21.75
+          "value": 15432.37,
+          "pct": 21.88
         },
         {
           "sector": "RaaS",
-          "value": 10013.98,
-          "pct": 14.14
+          "value": 9925.27,
+          "pct": 14.07
         },
         {
           "sector": "Electroceuticals",
-          "value": 8638.92,
-          "pct": 12.2
+          "value": 8496.97,
+          "pct": 12.05
         },
         {
           "sector": "Drones",
-          "value": 8318.9,
-          "pct": 11.75
+          "value": 8140.34,
+          "pct": 11.54
         },
         {
           "sector": "Nuclear",
-          "value": 7396.02,
-          "pct": 10.44
+          "value": 7238.25,
+          "pct": 10.26
         }
       ],
-      "mwrrYtd": 21.37,
-      "ytdPct": 6.46,
-      "ytdStrat": 9.57,
-      "ytdBench": 7.6,
-      "mwrrStrat": 32.67,
-      "mwrrBench": 25.43,
+      "mwrrYtd": 19.84,
+      "ytdPct": 6.08,
+      "ytdStrat": 7.91,
+      "ytdBench": 8.22,
+      "mwrrStrat": 26.3,
+      "mwrrBench": 27.42,
       "assetClasses": [
         {
           "name": "Cash",
           "value": 7643.95,
-          "pct": 9.74
+          "pct": 9.78
         },
         {
           "name": "Equity",
-          "value": 70816.89,
-          "pct": 90.26
+          "value": 70535.65,
+          "pct": 90.22
         },
         {
           "name": "Bonds",
@@ -1899,47 +1908,47 @@
     "values": [
       [
         1.0,
-        0.635,
-        0.6473
+        0.6507,
+        0.6571
       ],
       [
-        0.635,
+        0.6507,
         1.0,
-        0.7542
+        0.7605
       ],
       [
-        0.6473,
-        0.7542,
+        0.6571,
+        0.7605,
         1.0
       ]
     ],
     "rankings": {
       "weekly": [
         {
-          "name": "Next Horizon",
-          "perf": 2.81
+          "name": "Value Underflow",
+          "perf": 0.81
         },
         {
-          "name": "Value Underflow",
-          "perf": 1.29
+          "name": "Next Horizon",
+          "perf": -2.16
         },
         {
           "name": "Trend Spotting",
-          "perf": -0.31
+          "perf": -2.31
         }
       ],
       "monthly": [
         {
           "name": "Next Horizon",
-          "perf": 18.93
+          "perf": 17.13
         },
         {
           "name": "Trend Spotting",
-          "perf": 12.68
+          "perf": 11.06
         },
         {
           "name": "Value Underflow",
-          "perf": 8.31
+          "perf": 8.32
         }
       ]
     }
