@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-02T12:04:16Z",
+  "lastUpdated": "2026-05-03T12:02:01Z",
   "strategies": [
     {
       "fetchError": false,
@@ -266,7 +266,7 @@
           102.99
         ]
       },
-      "portfolioTotal": 70594.1,
+      "portfolioTotal": 70594.5,
       "metrics": {
         "sharpe": -7.13,
         "sortino": -0.23,
@@ -362,7 +362,7 @@
             "name": "Nestlé",
             "currency": "CHF",
             "sector": "Cons staples",
-            "value": 2930.81
+            "value": 2931.13
           },
           {
             "name": "Novo Nordisk",
@@ -406,25 +406,25 @@
             "name": "FR001400H7V7",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3310.43693
+            "quantity": 3310.505792
           },
           {
             "name": "FR001400PM68",
             "underlying": "Gov France",
             "currency": "€",
-            "quantity": 3360.475067
+            "quantity": 3360.564667
           },
           {
             "name": "DE0001141620",
             "underlying": "Gov Germany",
             "currency": "€",
-            "quantity": 3584.116438
+            "quantity": 3583.890411
           },
           {
             "name": "XS1874122267",
             "underlying": "Corpo France",
             "currency": "€",
-            "quantity": 2444.750751
+            "quantity": 2444.899363
           }
         ],
         "crypto": [],
@@ -470,7 +470,7 @@
         },
         {
           "sector": "Gov France",
-          "value": 6670.91,
+          "value": 6671.07,
           "pct": 11.22
         },
         {
@@ -485,7 +485,7 @@
         },
         {
           "sector": "Cons staples",
-          "value": 5317.03,
+          "value": 5317.35,
           "pct": 8.94
         },
         {
@@ -495,21 +495,21 @@
         },
         {
           "sector": "Gov Germany",
-          "value": 3584.12,
+          "value": 3583.89,
           "pct": 6.03
         },
         {
           "sector": "Corpo France",
-          "value": 2444.75,
+          "value": 2444.9,
           "pct": 4.11
         }
       ],
-      "mwrrYtd": 5.87,
+      "mwrrYtd": 5.82,
       "ytdPct": 1.91,
       "ytdStrat": 6.06,
       "ytdBench": 2.99,
-      "mwrrStrat": 19.42,
-      "mwrrBench": 9.29,
+      "mwrrStrat": 19.25,
+      "mwrrBench": 9.21,
       "assetClasses": [
         {
           "name": "Cash",
@@ -518,12 +518,12 @@
         },
         {
           "name": "Equity",
-          "value": 46748.65,
+          "value": 46748.97,
           "pct": 64.85
         },
         {
           "name": "Bonds",
-          "value": 12699.78,
+          "value": 12699.86,
           "pct": 17.62
         },
         {
@@ -991,12 +991,12 @@
           "pct": 7.44
         }
       ],
-      "mwrrYtd": 97.91,
+      "mwrrYtd": 96.8,
       "ytdPct": 25.39,
       "ytdStrat": 16.82,
       "ytdBench": 5.62,
-      "mwrrStrat": 59.83,
-      "mwrrBench": 17.93,
+      "mwrrStrat": 59.21,
+      "mwrrBench": 17.77,
       "assetClasses": [
         {
           "name": "Cash",
@@ -1294,17 +1294,17 @@
           110.24
         ]
       },
-      "portfolioTotal": 80198.74,
+      "portfolioTotal": 80217.21,
       "metrics": {
-        "sharpe": 87.46,
+        "sharpe": 87.41,
         "sortino": 7.38,
         "sortinoTarget": 16.0,
         "perfTarget": 16.0,
-        "ttm": 121.73,
+        "ttm": 121.88,
         "volatility": 1.35,
-        "varParametric": 3.66,
-        "varHistoric": 6.1,
-        "varConditional": 9.19
+        "varParametric": 3.65,
+        "varHistoric": 6.09,
+        "varConditional": 9.18
       },
       "weeklyPerformers": {
         "top": [
@@ -1444,7 +1444,7 @@
             "name": "Kioxia",
             "currency": "¥",
             "sector": "Memory chips",
-            "value": 3557.81
+            "value": 3569.17
           },
           {
             "name": "Sandisk",
@@ -1522,7 +1522,7 @@
             "name": "Uranium royalty corp",
             "currency": "CAD",
             "sector": "Nuclear",
-            "value": 324.02
+            "value": 323.77
           },
           {
             "name": "Nexgen energy",
@@ -1570,13 +1570,13 @@
             "name": "ABB",
             "currency": "CHF",
             "sector": "RaaS",
-            "value": 2566.05
+            "value": 2566.33
           },
           {
             "name": "Fanuc",
             "currency": "¥",
             "sector": "RaaS",
-            "value": 1110.7
+            "value": 1114.24
           },
           {
             "name": "Zebra",
@@ -1642,7 +1642,7 @@
             "name": "Sky perfect JSAT",
             "currency": "¥",
             "sector": "Space infrasctructure",
-            "value": 1106.73
+            "value": 1110.27
           },
           {
             "name": "Globalstar",
@@ -1849,17 +1849,17 @@
       "sectors": [
         {
           "sector": "Memory chips",
-          "value": 22221.33,
-          "pct": 30.38
+          "value": 22232.69,
+          "pct": 30.39
         },
         {
           "sector": "Space infrasctructure",
-          "value": 16084.46,
+          "value": 16088.0,
           "pct": 21.99
         },
         {
           "sector": "RaaS",
-          "value": 10138.78,
+          "value": 10142.6,
           "pct": 13.86
         },
         {
@@ -1874,16 +1874,16 @@
         },
         {
           "sector": "Nuclear",
-          "value": 7569.11,
+          "value": 7568.86,
           "pct": 10.35
         }
       ],
-      "mwrrYtd": 31.97,
-      "ytdPct": 9.63,
+      "mwrrYtd": 31.77,
+      "ytdPct": 9.66,
       "ytdStrat": 10.31,
       "ytdBench": 10.24,
-      "mwrrStrat": 34.46,
-      "mwrrBench": 34.19,
+      "mwrrStrat": 34.14,
+      "mwrrBench": 33.87,
       "assetClasses": [
         {
           "name": "Cash",
@@ -1892,7 +1892,7 @@
         },
         {
           "name": "Equity",
-          "value": 73136.25,
+          "value": 73154.73,
           "pct": 90.54
         },
         {
@@ -1926,17 +1926,17 @@
     "values": [
       [
         1.0,
-        0.6614,
-        0.6675
+        0.6781,
+        0.6784
       ],
       [
-        0.6614,
+        0.6781,
         1.0,
-        0.7726
+        0.7795
       ],
       [
-        0.6675,
-        0.7726,
+        0.6784,
+        0.7795,
         1.0
       ]
     ],
